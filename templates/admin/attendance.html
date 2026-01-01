@@ -98,19 +98,7 @@
         </div>
     </header>
 
-    <!-- BREADCRUMB (DESKTOP ONLY) -->
-    <header class="desktop-only-show"
-        style="padding-top: 1rem; padding-bottom: 2rem; border-bottom: 3px solid black; margin-bottom: 2.5rem;">
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-            <a href="{{ url_for('admin_dashboard') }}"
-                style="text-decoration: none; color: black; background: white; border: 2.5px solid black; padding: 8px; border-radius: 10px; display: flex; align-items: center; box-shadow: 3px 3px 0px black;">
-                <i data-lucide="layout-dashboard"></i>
-            </a>
-            <h1 style="font-family: 'Lexend'; font-weight: 900; font-size: 1rem; margin: 0; text-transform: uppercase;">
-                MILK REGISTRY</h1>
-            <div style="width: 40px;"></div>
-        </div>
-    </header>
+    <!-- END HEADER -->
 
     <form method="POST" id="attendanceForm">
         <input type="hidden" name="target_date" value="{{ today.strftime('%Y-%m-%d') }}">
@@ -210,6 +198,25 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    {% else %}
+                    <!-- Empty State View -->
+                    <div class="nb-card"
+                        style="grid-column: 1 / -1; padding: 3rem 2rem; text-align: center; border-radius: 24px; border: 3px dashed rgba(0,0,0,0.1); background: rgba(0,0,0,0.02); box-shadow: none;">
+                        <div
+                            style="background: white; width: 80px; height: 80px; border-radius: 20px; border: 2.5px solid black; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 4px 4px 0px black;">
+                            <i data-lucide="users" style="width: 40px; height: 40px; color: var(--clr-blue);"></i>
+                        </div>
+                        <h3 style="font-family: 'Lexend'; font-weight: 900; font-size: 1.5rem; margin-bottom: 0.5rem;">
+                            No Customers Found</h3>
+                        <p
+                            style="font-weight: 600; opacity: 0.6; margin-bottom: 2rem; max-width: 300px; margin-left: auto; margin-right: auto;">
+                            You haven't added any customers to your registry yet.
+                        </p>
+                        <a href="{{ url_for('manage_customers') }}" class="nb-btn blue"
+                            style="display: inline-flex; align-items: center; gap: 10px; padding: 0 25px; height: 55px; border-radius: 16px;">
+                            <i data-lucide="user-plus"></i> ADD CUSTOMERS NOW
+                        </a>
                     </div>
                     {% endfor %}
                 </div>
