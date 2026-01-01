@@ -19,6 +19,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:/
 if app.config['SQLALCHEMY_DATABASE_URI'].startswith("postgres://"):
     app.config['SQLALCHEMY_DATABASE_URI'] = app.config['SQLALCHEMY_DATABASE_URI'].replace("postgres://", "postgresql://", 1)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=30)
 
 db.init_app(app)
 login_manager = LoginManager()
@@ -60,7 +61,7 @@ def login():
         user = User.query.filter_by(email_or_phone=identifier).first()
         
         if user and check_password_hash(user.password_hash, password):
-            login_user(user)
+            login_user(user, remember=True)
             flash('show_welcome_animation', 'animation')
             if user.role == 'admin':
                 return redirect(url_for('admin_dashboard'))
