@@ -67,16 +67,7 @@
         </div>
     </header>
 
-    <!-- DESKTOP HEADER (MINIMAL) -->
-    <header class="desktop-only-show desktop-header-minimal">
-        <a href="{{ url_for('admin_dashboard') }}"
-            style="text-decoration: none; color: black; background: white; border: 2.5px solid black; padding: 8px; border-radius: 10px; display: flex; align-items: center; box-shadow: 3px 3px 0px black;">
-            <i data-lucide="layout-dashboard"></i>
-        </a>
-        <h1 style="font-family: 'Lexend'; font-weight: 900; font-size: 1rem; margin: 0; text-transform: uppercase;">
-            BILLING CENTER</h1>
-        <div style="width: 40px;"></div>
-    </header>
+    <!-- END HEADER -->
 
     <div class="desktop-split">
         <!-- LEFT COLUMN: SUMMARY & ACTIONS -->
@@ -197,6 +188,25 @@
                         </div>
                     </div>
                     {% endif %}
+                </div>
+                {% else %}
+                <!-- Empty State -->
+                <div class="nb-card"
+                    style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; background: rgba(0,0,0,0.02); border: 3px dashed rgba(0,0,0,0.1); border-radius: 24px; box-shadow: none;">
+                    <div
+                        style="background: white; width: 80px; height: 80px; border-radius: 20px; border: 2.5px solid black; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 4px 4px 0px black;">
+                        <i data-lucide="receipt" style="width: 40px; height: 40px; color: var(--clr-red);"></i>
+                    </div>
+                    <h3 style="font-family: 'Lexend'; font-weight: 900; font-size: 1.5rem; margin-bottom: 0.5rem;">No
+                        Billing Data</h3>
+                    <p
+                        style="font-weight: 600; opacity: 0.6; margin-bottom: 2rem; max-width: 300px; margin-left: auto; margin-right: auto;">
+                        Register customers first to start generating monthly bills and tracking revenue.
+                    </p>
+                    <a href="{{ url_for('manage_customers') }}" class="nb-btn blue"
+                        style="display: inline-flex; align-items: center; gap: 10px; padding: 0 25px; height: 55px; border-radius: 16px;">
+                        <i data-lucide="user-plus"></i> ADD CUSTOMERS
+                    </a>
                 </div>
                 {% endfor %}
             </div>

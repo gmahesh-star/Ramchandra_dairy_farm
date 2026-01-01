@@ -68,16 +68,7 @@
         </div>
     </header>
 
-    <!-- DESKTOP HEADER (MINIMAL BREADCRUMB) -->
-    <header class="desktop-only-show desktop-header-minimal">
-        <a href="{{ url_for('admin_dashboard') }}"
-            style="text-decoration: none; color: black; background: white; border: 2.5px solid black; padding: 8px; border-radius: 10px; display: flex; align-items: center; box-shadow: 3px 3px 0px black;">
-            <i data-lucide="layout-dashboard"></i>
-        </a>
-        <h1 style="font-family: 'Lexend'; font-weight: 900; font-size: 1rem; margin: 0; text-transform: uppercase;">
-            DIRECTORY</h1>
-        <div style="width: 40px;"></div>
-    </header>
+    <!-- END HEADER -->
 
     <div class="desktop-split">
         <!-- LEFT COLUMN: CONTROLS & FORM -->
@@ -191,10 +182,19 @@
                     </div>
                 </div>
                 {% else %}
+                <!-- Empty State -->
                 <div class="nb-card"
-                    style="text-align: center; padding: 3rem 1.5rem; background: var(--clr-bg); border-style: dashed; opacity: 0.5;">
-                    <i data-lucide="users" style="width: 48px; height: 48px; margin-bottom: 1rem;"></i>
-                    <p style="font-weight: 950;">NO CUSTOMERS REGISTERED</p>
+                    style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; background: rgba(0,0,0,0.02); border: 3px dashed rgba(0,0,0,0.1); border-radius: 24px; box-shadow: none;">
+                    <div
+                        style="background: white; width: 80px; height: 80px; border-radius: 20px; border: 2.5px solid black; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 4px 4px 0px black;">
+                        <i data-lucide="users" style="width: 40px; height: 40px; color: var(--clr-blue);"></i>
+                    </div>
+                    <h3 style="font-family: 'Lexend'; font-weight: 900; font-size: 1.5rem; margin-bottom: 0.5rem;">No
+                        Customers Found</h3>
+                    <p
+                        style="font-weight: 600; opacity: 0.6; margin-bottom: 2rem; max-width: 300px; margin-left: auto; margin-right: auto;">
+                        Start by adding your first customer using the registration form.
+                    </p>
                 </div>
                 {% endfor %}
             </div>
