@@ -1,0 +1,9 @@
+Flask
+Flask-SQLAlchemy
+Flask-Login
+Werkzeug
+WeasyPrint
+python-dotenv
+flask-migrate
+pyhanko
+reportlab

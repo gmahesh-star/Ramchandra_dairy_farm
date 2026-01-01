@@ -1,0 +1,320 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    /* Force edge-to-edge for this specific page */
+    .container {
+        padding: 0 !important;
+        max-width: none !important;
+        margin: 0 !important;
+    }
+
+    header,
+    section,
+    footer {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    /* Desktop alignment refinements */
+    @media (min-width: 1024px) {
+        .container {
+            display: block !important;
+            padding-top: 2rem !important;
+        }
+
+        .desktop-split {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            align-items: start !important;
+            gap: 80px !important;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .desktop-side-padding {
+            padding-top: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        .sticky-left {
+            position: sticky;
+            top: 2rem;
+        }
+    }
+
+    .media-placeholder {
+        background: #e0e0e0;
+        border: 3px solid black;
+        border-radius: 16px;
+        box-shadow: 6px 6px 0px black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #888;
+        font-weight: 800;
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .media-placeholder::after {
+        content: 'MEDIA PLACEHOLDER';
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+    }
+
+    .video-placeholder {
+        height: 250px;
+        background: #1a1a1a;
+        color: #555;
+    }
+
+    .photo-placeholder {
+        height: 200px;
+    }
+
+    .grid-gallery {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .floating-text {
+        background: var(--clr-yellow);
+        border: 2px solid black;
+        padding: 5px 10px;
+        font-weight: 950;
+        font-size: 0.8rem;
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        box-shadow: 3px 3px 0px black;
+    }
+</style>
+
+<div
+    style="background-color: var(--clr-bg); color: var(--clr-black); padding-bottom: 4rem; width: 100%; overflow-x: hidden;">
+    <div class="desktop-split" style="padding: 0 1.5rem;">
+        <!-- Left Side: Identity & Story -->
+        <div class="desktop-side-padding sticky-left">
+            <!-- HEADER -->
+            <header
+                style="padding-top: 2.5rem; padding-bottom: 2rem; background: var(--clr-bg); border-bottom: 3px solid black; padding-left: 0; padding-right: 0;">
+                <div class="desktop-only-hide"
+                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+                    <a href="{{ url_for('guest') }}"
+                        style="text-decoration: none; color: black; background: white; border: 2.5px solid black; padding: 8px; border-radius: 10px; display: flex; align-items: center; box-shadow: 3px 3px 0px black;">
+                        <i data-lucide="chevron-left"></i>
+                    </a>
+                    <h1
+                        style="font-family: 'Lexend'; font-weight: 900; font-size: 1.2rem; margin: 0; text-transform: uppercase;">
+                        FARM TOUR</h1>
+                    <div style="width: 40px;"></div>
+                </div>
+
+                <h2
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 2.5rem; line-height: 0.9; margin-bottom: 1rem;">
+                    INSIDE<br>THE DAIRY</h2>
+                <div
+                    style="background: var(--clr-blue); color: white; border: 3px solid black; padding: 10px; transform: rotate(-1deg); display: inline-block; box-shadow: 4px 4px 0px black;">
+                    <p style="font-family: var(--font-odia); font-weight: 950; font-size: 1.1rem; margin: 0;">ଆମର କାମ
+                        କରିବା
+                        ପ୍ରଣାଳୀ ଏବଂ ଫାର୍ମର ଝଲକ</p>
+                </div>
+            </header>
+
+            <!-- SECTION 1: THE STORY -->
+            <section style="margin-top: 3rem; margin-bottom: 4rem; padding-left: 0; padding-right: 0;">
+                <div
+                    style="background: white; border: 3px solid black; padding: 1.5rem; border-radius: 16px; box-shadow: 8px 8px 0px var(--clr-yellow); position: relative;">
+                    <div
+                        style="position: absolute; top: -20px; right: 20px; background: var(--clr-red); color: white; border: 2.5px solid black; padding: 5px 10px; font-family: 'Anton'; font-size: 0.9rem; transform: rotate(5deg);">
+                        WHO WE ARE</div>
+
+                    <h3
+                        style="font-family: var(--font-odia); font-weight: 950; font-size: 1.5rem; margin-bottom: 0.5rem;">
+                        ଆମର
+                        କାହାଣୀ | OUR STORY</h3>
+                    <p
+                        style="font-family: var(--font-odia); font-size: 1rem; line-height: 1.5; font-weight: 900; color: #000; margin-bottom: 1rem;">
+                        ନମସ୍କାର! ଆମେ ରାମଚନ୍ଦ୍ର ଡେୟାରୀ ଫାର୍ମ। ୨୦୨୦ ରୁ ଆମର ଲକ୍ଷ୍ୟ ହେଉଛି ପ୍ରତ୍ୟେକ ଘରକୁ ଶୁଦ୍ଧ ଏବଂ ପ୍ରାକୃତିକ
+                        ଗାଈ
+                        କ୍ଷୀର ପହଞ୍ଚାଇବା। ଆମର ଫାର୍ମରେ ଆମେ ଗାଈମାନଙ୍କର ଯତ୍ନ ନିଜ ପରିବାର ଭଳି ନେଇଥାଉ।
+                    </p>
+                    <p
+                        style="font-size: 0.95rem; line-height: 1.4; font-weight: 700; color: #444; border-top: 2px solid rgba(0,0,0,0.1); padding-top: 0.8rem;">
+                        Namaste! We are Ramchandra Dairy Farm. Since 2020, our mission is to deliver pure, natural cow
+                        milk to
+                        every home. We treat our cows like members of our own family.
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 2: VIDEO TOUR -->
+            <section style="margin-bottom: 4rem; padding-left: 0; padding-right: 0;">
+                <h3
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 1.8rem; margin-bottom: 1.5rem; transform: rotate(-1deg); background: var(--clr-black); color: white; display: inline-block; padding: 5px 15px; border: 3px solid black; box-shadow: 4px 4px 0px var(--clr-green);">
+                    VIDEO TOUR</h3>
+                <p style="font-family: var(--font-odia); font-weight: 950; font-size: 1rem; margin-bottom: 1rem;">ଫାର୍ମର
+                    ଏକ ଛୋଟ
+                    ଝଲକ ଦେଖନ୍ତୁ:</p>
+                <div class="media-placeholder video-placeholder">
+                    <i data-lucide="play-circle" style="width: 48px; height: 48px; color: white;"></i>
+                    <div class="floating-text">FARM OPERATIONS VIDEO</div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: WHY CHOOSE US -->
+            <section style="margin-bottom: 4rem; padding-left: 0; padding-right: 0;">
+                <h3
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 2.2rem; line-height: 0.9; margin-bottom: 2rem; text-transform: uppercase;">
+                    WHY<br>CHOOSE US?</h3>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div
+                        style="background: var(--clr-yellow); border: 3px solid black; padding: 1.2rem; border-radius: 20px; box-shadow: 5px 5px 0px black; transform: rotate(-2deg);">
+                        <i data-lucide="droplets"
+                            style="width: 32px; height: 32px; color: black; margin-bottom: 10px;"></i>
+                        <h4 style="font-family: 'Lexend'; font-weight: 900; font-size: 0.9rem; margin: 0;">100% PURE
+                            MILK</h4>
+                        <p style="font-size: 0.7rem; font-weight: 700; margin-top: 4px; opacity: 0.7;">Raw milk from
+                            cows,
+                            delivered as it is.</p>
+                    </div>
+                    <div
+                        style="background: var(--clr-blue); border: 3px solid black; padding: 1.2rem; border-radius: 20px; box-shadow: 5px 5px 0px black; transform: rotate(2deg); color: white;">
+                        <i data-lucide="smile"
+                            style="width: 32px; height: 32px; color: white; margin-bottom: 10px;"></i>
+                        <h4 style="font-family: 'Lexend'; font-weight: 900; font-size: 0.9rem; margin: 0;">NO
+                            ADULTERATION</h4>
+                        <p style="font-size: 0.7rem; font-weight: 700; margin-top: 4px; opacity: 0.8;">Zero water, Zero
+                            powder,
+                            Zero urea.</p>
+                    </div>
+                    <div
+                        style="background: var(--clr-green); border: 3px solid black; padding: 1.2rem; border-radius: 20px; box-shadow: 5px 5px 0px black; transform: rotate(1deg); color: white;">
+                        <i data-lucide="truck"
+                            style="width: 32px; height: 32px; color: white; margin-bottom: 10px;"></i>
+                        <h4 style="font-family: 'Lexend'; font-weight: 900; font-size: 0.9rem; margin: 0;">DIRECT
+                            DELIVERY</h4>
+                        <p style="font-size: 0.7rem; font-weight: 700; margin-top: 4px; opacity: 0.8;">No middleman.
+                            Straight to
+                            your bucket.</p>
+                    </div>
+                    <div
+                        style="background: var(--clr-red); border: 3px solid black; padding: 1.2rem; border-radius: 20px; box-shadow: 5px 5px 0px black; transform: rotate(-1deg); color: white;">
+                        <i data-lucide="sun" style="width: 32px; height: 32px; color: white; margin-bottom: 10px;"></i>
+                        <h4 style="font-family: 'Lexend'; font-weight: 900; font-size: 0.9rem; margin: 0;">MORNING FRESH
+                        </h4>
+                        <p style="font-size: 0.7rem; font-weight: 700; margin-top: 4px; opacity: 0.8;">Milked and
+                            delivered
+                            within 2-3 hours.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Right Side: Process, Why Us & CTA -->
+        <div class="desktop-side-padding" style="padding-top: 2.5rem;">
+            <!-- SECTION 3: HOW WE DO IT (THE PROCESS) -->
+            <section style="margin-bottom: 4rem; padding-left: 0; padding-right: 0;">
+                <h3
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 1.8rem; margin-bottom: 1.5rem; text-decoration: underline; text-decoration-thickness: 5px; text-decoration-color: var(--clr-red);">
+                    OUR PROCESS</h3>
+
+                <div style="display: flex; flex-direction: column; gap: 25px;">
+                    <!-- Step 1 -->
+                    <div
+                        style="background: white; border: 3px solid black; border-radius: 16px; overflow: hidden; box-shadow: 6px 6px 0px black;">
+                        <div class="media-placeholder photo-placeholder">
+                            <div class="floating-text">CATTLE FEEDING</div>
+                        </div>
+                        <div style="padding: 1.2rem;">
+                            <h4
+                                style="font-family: var(--font-odia); font-weight: 950; font-size: 1.1rem; margin-bottom: 5px;">
+                                ୦୧. ପ୍ରାକୃତିକ ଖାଦ୍ୟ (NATURAL FEED)</h4>
+                            <p
+                                style="font-family: var(--font-odia); font-size: 0.9rem; font-weight: 800; color: #555; margin: 0;">
+                                ଆମେ ଗାଈମାନଙ୍କୁ ସବୁଜ ଘାସ ଏବଂ ପୌଷ୍ଟିକ ଆହାର ଦେଇଥାଉ, ଯାହାଦ୍ୱାରା କ୍ଷୀର ସ୍ୱାଦିଷ୍ଟ ଏବଂ ସୁସ୍ଥ
+                                ହୋଇଥାଏ।
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div
+                        style="background: white; border: 3px solid black; border-radius: 16px; overflow: hidden; box-shadow: 6px 6px 0px black;">
+                        <div class="media-placeholder photo-placeholder" style="background: #d4edda;">
+                            <div class="floating-text">HYGIENIC MILKING</div>
+                        </div>
+                        <div style="padding: 1.2rem;">
+                            <h4
+                                style="font-family: var(--font-odia); font-weight: 950; font-size: 1.1rem; margin-bottom: 5px;">
+                                ୦୨. ସ୍ୱଚ୍ଛ ଦୋହନ (CLEAN MILKING)</h4>
+                            <p
+                                style="font-family: var(--font-odia); font-size: 0.9rem; font-weight: 800; color: #555; margin: 0;">
+                                ଦୋହନ ପୂର୍ବରୁ ଏବଂ ପରେ ସ୍ୱଚ୍ଛତା ଉପରେ କଡା ଧ୍ୟାନ ଦିଆଯାଏ। କୌଣସି ପ୍ରକାର ଅପମିଶ୍ରଣ କରାଯାଏ ନାହିଁ।
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div
+                        style="background: white; border: 3px solid black; border-radius: 16px; overflow: hidden; box-shadow: 6px 6px 0px black;">
+                        <div class="media-placeholder photo-placeholder" style="background: #fff3cd;">
+                            <div class="floating-text">DIRECT DELIVERY</div>
+                        </div>
+                        <div style="padding: 1.2rem;">
+                            <h4
+                                style="font-family: var(--font-odia); font-weight: 950; font-size: 1.1rem; margin-bottom: 5px;">
+                                ୦୩. ସିଧାସଳଖ ଡେଲିଭରି (DIRECT DELIVERY)</h4>
+                            <p
+                                style="font-family: var(--font-odia); font-size: 0.9rem; font-weight: 800; color: #555; margin: 0;">
+                                କାଢିବା ପରେ ଖୁବ୍ କମ୍ ସମୟ ମଧ୍ୟରେ କ୍ଷୀର ଆପଣଙ୍କ ଦୁଆର ମୁହଁରେ ପହଞ୍ଚାଯାଏ।</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- SECTION 5: GALLERY -->
+            <section style="margin-bottom: 4rem; padding-left: 0; padding-right: 0;">
+                <h3
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center;">
+                    FARM GALLERY</h3>
+                <div class="grid-gallery">
+                    <div class="media-placeholder photo-placeholder" style="height: 150px;"></div>
+                    <div class="media-placeholder photo-placeholder" style="height: 150px; background: #ffebee;"></div>
+                    <div class="media-placeholder photo-placeholder" style="height: 150px; background: #f3e5f5;"></div>
+                    <div class="media-placeholder photo-placeholder" style="height: 150px; background: #e8f5e9;"></div>
+                    <div class="media-placeholder photo-placeholder" style="grid-column: span 2; height: 180px;">
+                        <div class="floating-text">HAPPY COWS</div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div> <!-- END desktop-split -->
+
+    <!-- SECTION 6: CALL TO ACTION (CENTERED BELOOW SPLIT) -->
+    <section style="padding: 2rem 1.5rem 4rem 1.5rem; max-width: 800px; margin: 0 auto;">
+        <div
+            style="background: var(--clr-black); color: white; border: 3px solid black; padding: 2.5rem 1.5rem; border-radius: 24px; text-align: center; box-shadow: 10px 10px 0px var(--clr-red);">
+            <h3 style="font-family: var(--font-odia); font-weight: 950; font-size: 2rem; margin-bottom: 1rem;">ଆଜି ହିଁ
+                ଆରମ୍ଭ କରନ୍ତୁ!</h3>
+            <p style="font-family: 'Lexend'; font-weight: 400; font-size: 1.1rem; margin-bottom: 2.5rem; opacity: 0.8;">
+                Join
+                50+ families who trust us for their daily nutrition.</p>
+
+            <a href="{{ url_for('signup') }}" class="nb-btn"
+                style="background: var(--clr-yellow); color: black; border-width: 3px; height: 64px; border-radius: 16px; font-weight: 950; font-size: 1.2rem; box-shadow: 5px 5px 0px white; width: 100%; max-width: 400px; margin: 0 auto;">
+                CLICK TO JOIN NOW
+            </a>
+        </div>
+    </section>
+
+
+</div>
+{% endblock %}

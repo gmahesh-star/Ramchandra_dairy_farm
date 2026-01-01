@@ -1,0 +1,272 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    .ledger-grid {
+        display: grid;
+        gap: 15px;
+    }
+
+    /* Desktop layout refinements */
+    @media (min-width: 1024px) {
+        .container {
+            display: block !important;
+            padding-top: 2rem !important;
+        }
+
+        .desktop-split {
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            gap: 60px;
+            align-items: start;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .sticky-controls {
+            position: sticky;
+            top: 2rem;
+        }
+
+        .ledger-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 20px !important;
+        }
+
+        .desktop-header-minimal {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid black;
+        }
+    }
+</style>
+<div style="padding-bottom: 2rem;">
+    <!-- MOBILE HEADER (DEFAULT) -->
+    <header class="desktop-only-hide"
+        style="padding-top: 1rem; padding-bottom: 2rem; border-bottom: 3px solid black; margin-bottom: 2.5rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+            <a href="{{ url_for('admin_dashboard') }}"
+                style="text-decoration: none; color: black; background: white; border: 2.5px solid black; padding: 8px; border-radius: 10px; display: flex; align-items: center; box-shadow: 3px 3px 0px black;">
+                <i data-lucide="layout-dashboard"></i>
+            </a>
+            <h1
+                style="font-family: 'Lexend'; font-weight: 900; font-size: 1.2rem; margin: 0; text-transform: uppercase;">
+                BILLING CENTER</h1>
+            <div style="width: 40px;"></div>
+        </div>
+
+        <h2 style="font-family: 'Lexend'; font-weight: 950; font-size: 2rem; line-height: 0.9; margin-bottom: 0.5rem;">
+            REVENUE<br>SUMMARY</h2>
+        <div
+            style="background: black; color: white; border: 2.5px solid black; padding: 6px 15px; transform: rotate(-1deg); display: inline-block; box-shadow: 4px 4px 0px var(--clr-blue);">
+            <p style="font-family: 'Lexend'; font-weight: 950; font-size: 1.1rem; margin: 0;">{{ display_month }}</p>
+        </div>
+    </header>
+
+    <!-- DESKTOP HEADER (MINIMAL) -->
+    <header class="desktop-only-show desktop-header-minimal">
+        <a href="{{ url_for('admin_dashboard') }}"
+            style="text-decoration: none; color: black; background: white; border: 2.5px solid black; padding: 8px; border-radius: 10px; display: flex; align-items: center; box-shadow: 3px 3px 0px black;">
+            <i data-lucide="layout-dashboard"></i>
+        </a>
+        <h1 style="font-family: 'Lexend'; font-weight: 900; font-size: 1rem; margin: 0; text-transform: uppercase;">
+            BILLING CENTER</h1>
+        <div style="width: 40px;"></div>
+    </header>
+
+    <div class="desktop-split">
+        <!-- LEFT COLUMN: SUMMARY & ACTIONS -->
+        <div class="sticky-controls">
+            <div class="desktop-only-show" style="margin-bottom: 3rem;">
+                <h2
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 3.5rem; line-height: 0.85; margin: 0 0 1.5rem 0; text-transform: uppercase;">
+                    REVENUE<br><span style="color: var(--clr-red);">SUMMARY</span></h2>
+                <div
+                    style="background: black; color: white; border: 2.5px solid black; padding: 8px 20px; transform: rotate(-1deg); display: inline-block; box-shadow: 6px 6px 0px var(--clr-blue);">
+                    <p style="font-family: 'Lexend'; font-weight: 950; font-size: 1.3rem; margin: 0;">{{ display_month
+                        }}</p>
+                </div>
+            </div>
+
+            <!-- ACTIONS -->
+            <div class="nb-card blue"
+                style="border-radius: 24px; padding: 1.5rem; box-shadow: 8px 8px 0px black; margin-bottom: 3rem; border-width: 3px;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.2rem;">
+                    <i data-lucide="zap" style="width: 24px; height: 24px; color: var(--clr-yellow);"></i>
+                    <h3 style="margin: 0; font-weight: 950; font-size: 1rem; text-transform: uppercase;">Bulk Operations
+                    </h3>
+                </div>
+                <form action="{{ url_for('generate_bills') }}" method="POST">
+                    <button type="submit" class="nb-btn yellow"
+                        style="margin-bottom: 0; height: 60px; border-radius: 16px; font-weight: 950; color: black; box-shadow: 4px 4px 0px black;">
+                        CALCULATE & UPDATE ALL BILLS
+                    </button>
+                </form>
+            </div>
+
+            <div class="desktop-only-show"
+                style="margin-top: 3rem; background: var(--clr-bg); border: 2.5px solid black; border-radius: 18px; padding: 1.5rem; box-shadow: 5px 5px 0px black;">
+                <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1.5rem;">
+                    <i data-lucide="info" style="width: 20px; flex-shrink: 0; color: var(--clr-blue);"></i>
+                    <p style="font-size: 0.8rem; font-weight: 800; opacity: 0.7; margin: 0;">Use the Whatsapp and PDF
+                        actions in the ledger to send invoices to individual customers.</p>
+                </div>
+                <a href="{{ url_for('admin_dashboard') }}" class="nb-btn outline"
+                    style="border-radius: 14px; border-width: 2.5px; height: 50px; font-size: 0.85rem; margin-bottom: 0;">
+                    <i data-lucide="arrow-left"></i> BACK TO DASHBOARD
+                </a>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: LEDGER -->
+        <div>
+            <h3
+                style="font-family: 'Lexend'; font-weight: 950; font-size: 1.2rem; margin-bottom: 1.5rem; display: inline-block; background: var(--clr-red); color: white; padding: 5px 15px; border-radius: 4px; transform: rotate(1deg);">
+                CUSTOMER LEDGER
+            </h3>
+
+            <div class="ledger-grid">
+                {% for customer in customers %}
+                <div class="nb-card"
+                    style="margin-bottom: 0; padding: 1.5rem; border-radius: 24px; box-shadow: 6px 6px 0px black;">
+                    <div class="flex-between" style="align-items: flex-start; margin-bottom: 1.5rem;">
+                        <div>
+                            <p style="font-weight: 950; font-size: 1.3rem; line-height: 1; margin: 0 0 4px 0;">{{
+                                customer.name
+                                }}</p>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <i data-lucide="milk" style="width: 14px; opacity: 0.5;"></i>
+                                <small style="opacity: 0.6; font-weight: 800;">{{ bills[customer.id].total_liters if
+                                    customer.id
+                                    in bills else 0 }} L TOTAL</small>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="font-weight: 950; font-size: 1.6rem; line-height: 1; margin: 0 0 8px 0;">
+                                ₹{{ (bills[customer.id].total_amount - (bills[customer.id].paid_amount or 0))|round(1)
+                                if
+                                (customer.id in bills and bills[customer.id].status != 'Paid') else
+                                (bills[customer.id].total_amount|round(1) if customer.id in bills else 0) }}
+                            </p>
+                            {% if customer.id in bills %}
+                            <div class="badge {{ 'green' if bills[customer.id].status == 'Paid' else ('yellow' if bills[customer.id].status in ['Pending', 'Partial'] else 'red') }}"
+                                style="box-shadow: 2px 2px 0px black; font-size: 0.7rem;">
+                                {{ bills[customer.id].status.upper() }}
+                            </div>
+                            {% else %}
+                            <span class="badge" style="background: #eee; font-size: 0.7rem;">NO BILL</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if customer.id in bills %}
+                    <div style="margin-top: 1.5rem; border-top: 2.5px dashed rgba(0,0,0,0.1); padding-top: 1.5rem;">
+                        <form action="/admin/payment/mark" method="POST"
+                            style="display: flex; gap: 10px; margin-bottom: 12px;">
+                            <input type="hidden" name="bill_id" value="{{ bills[customer.id].id }}">
+
+                            <div
+                                style="flex: 1; display: flex; border: 2.5px solid black; border-radius: 14px; overflow: hidden; background: white;">
+                                <span
+                                    style="background: #eee; padding: 0 12px; display: flex; align-items: center; font-weight: 900; border-right: 2px solid black;">₹</span>
+                                <input type="number" name="amount" class="nb-input" placeholder="Amount"
+                                    value="{{ (bills[customer.id].total_amount - (bills[customer.id].paid_amount or 0))|round(1) }}"
+                                    style="padding: 0 12px; margin-bottom: 0; border: none; height: 50px; font-weight: 900; flex: 1;">
+                            </div>
+                            <button type="submit" class="nb-btn black"
+                                style="width: auto; padding: 0 20px; font-weight: 950; margin-bottom: 0; height: 55px; box-shadow: 3px 3px 0px var(--clr-blue);">
+                                MARK PAID
+                            </button>
+                        </form>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <button
+                                onclick="sendWA('{{ customer.phone }}', '{{ customer.name }}', '{{ bills[customer.id].total_amount|round(1) }}', '{{ (bills[customer.id].paid_amount or 0)|round(1) }}', '{{ (bills[customer.id].total_amount - (bills[customer.id].paid_amount or 0))|round(1) }}', '{{ bills[customer.id].total_liters|round(1) }}', '{{ bills[customer.id].status }}', '{{ display_month }}', '{{ bills[customer.id].id }}')"
+                                class="nb-btn outline"
+                                style="width: 100%; height: 50px; font-weight: 950; margin-bottom: 0; font-size: 0.8rem; border-radius: 14px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                                <i data-lucide="message-circle" style="color: #25D366; width: 18px;"></i> WHATSAPP
+                            </button>
+                            <button onclick="downloadBill('{{ bills[customer.id].id }}', this)" class="nb-btn outline"
+                                style="width: 100%; height: 50px; font-weight: 950; margin-bottom: 0; font-size: 0.8rem; border-radius: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; border-color: black;">
+                                <i data-lucide="file-text" style="width: 18px;"></i> <span class="btn-text">PDF</span>
+                            </button>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <!-- FOOTER (MOBILE ONLY) -->
+        <div class="desktop-only-hide" style="margin-top: 4rem; text-align: center;">
+            <a href="{{ url_for('admin_dashboard') }}" class="nb-btn outline"
+                style="border-radius: 16px; border-width: 3px; max-width: 300px; margin: 0 auto;">
+                BACK TO DASHBOARD
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function sendWA(phone, name, total, paid, balance, liters, status, month, billId) {
+        const header = `*Ramchandra Dairy Farm*\n(ରମଚନ୍ଦ୍ର ଡେୟାରୀ ଫାର୍ମ)\n📍 Defence Colony, Bhabinarayanpur\n\n`;
+        const greeting = `Namaste ${name}, (ନମସ୍କାର ${name})\n`;
+        const period = `Bill for ${month}\n(${month} ମାସର ବିଲ୍ ବିବରଣୀ:)\n\n`;
+
+        const details = `🥛 Total Milk (ମୋଟ କ୍ଷୀର): *${liters} L*\n` +
+            `💰 Total Bill (ମୋଟ ବିଲ୍): *₹${total}*\n` +
+            `✅ Paid (ପୈଠ): *₹${paid}*\n` +
+            `🚨 Balance (ବକେୟା): *₹${balance}*\n\n`;
+
+        const statusText = `Status (ଅବସ୍ଥା): *${status.toUpperCase()}*\n\n`;
+
+        // Construct the direct link to the PDF
+        const billLink = `📄 View Detailed Bill (ବିସ୍ତୃତ ବିଲ୍ ଦେଖନ୍ତୁ):\n${window.location.origin}/download_bill/${billId}\n\n`;
+
+        let footer = `Please pay via UPI or Cash.\n\nThank you! (ଧନ୍ୟବାଦ!)`;
+
+        if (status === 'Paid') {
+            footer = `Thank you for your payment!\n\nHave a great day! (ଆପଣଙ୍କର ଦିନଟି ଶୁଭମୟ ହେଉ!)`;
+        }
+
+        const msg = header + greeting + period + details + statusText + billLink + footer;
+        const url = `https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+    }
+
+    function downloadBill(billId, btn) {
+        const originalContent = btn.innerHTML;
+
+        // Add loading state
+        btn.classList.add('btn-loading');
+        btn.innerHTML = `<i data-lucide="loader-2" class="spin" style="width: 18px;"></i> <span class="btn-text">WAIT...</span>`;
+
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+        // Trigger download via hidden link to avoid blocking UI
+        const link = document.createElement('a');
+        link.href = `/download_bill/${billId}`;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Reset state after 4 seconds
+        setTimeout(() => {
+            btn.classList.remove('btn-loading');
+            btn.innerHTML = originalContent;
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }, 4000);
+    }
+</script>
+{% endblock %}

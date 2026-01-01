@@ -1,0 +1,246 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    .member-grid {
+        display: grid;
+        gap: 15px;
+    }
+
+    /* Desktop layout refinements */
+    @media (min-width: 1024px) {
+        .container {
+            display: block !important;
+            padding-top: 2rem !important;
+        }
+
+        .desktop-split {
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            gap: 60px;
+            align-items: start;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .sticky-controls {
+            position: sticky;
+            top: 2rem;
+        }
+
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px !important;
+        }
+
+        .desktop-header-minimal {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid black;
+        }
+    }
+</style>
+<div style="padding-bottom: 2rem;">
+    <!-- MOBILE HEADER (DEFAULT) -->
+    <header class="desktop-only-hide"
+        style="padding-top: 1rem; padding-bottom: 2rem; border-bottom: 3px solid black; margin-bottom: 2.5rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+            <a href="{{ url_for('admin_dashboard') }}"
+                style="text-decoration: none; color: black; background: white; border: 2.5px solid black; padding: 8px; border-radius: 10px; display: flex; align-items: center; box-shadow: 3px 3px 0px black;">
+                <i data-lucide="layout-dashboard"></i>
+            </a>
+            <h1
+                style="font-family: 'Lexend'; font-weight: 900; font-size: 1.2rem; margin: 0; text-transform: uppercase;">
+                DIRECTORY</h1>
+            <div style="width: 40px;"></div>
+        </div>
+
+        <h2 style="font-family: 'Lexend'; font-weight: 950; font-size: 2rem; line-height: 0.9; margin-bottom: 0.5rem;">
+            MANAGE<br>CUSTOMERS</h2>
+        <div
+            style="background: var(--clr-yellow); color: black; border: 2.5px solid black; padding: 6px 12px; transform: rotate(1deg); display: inline-block; box-shadow: 4px 4px 0px black;">
+            <p style="font-family: var(--font-odia); font-weight: 950; font-size: 1rem; margin: 0;">ଗ୍ରାହକ ତାଲିକା |
+                Member Management</p>
+        </div>
+    </header>
+
+    <!-- DESKTOP HEADER (MINIMAL BREADCRUMB) -->
+    <header class="desktop-only-show desktop-header-minimal">
+        <a href="{{ url_for('admin_dashboard') }}"
+            style="text-decoration: none; color: black; background: white; border: 2.5px solid black; padding: 8px; border-radius: 10px; display: flex; align-items: center; box-shadow: 3px 3px 0px black;">
+            <i data-lucide="layout-dashboard"></i>
+        </a>
+        <h1 style="font-family: 'Lexend'; font-weight: 900; font-size: 1rem; margin: 0; text-transform: uppercase;">
+            DIRECTORY</h1>
+        <div style="width: 40px;"></div>
+    </header>
+
+    <div class="desktop-split">
+        <!-- LEFT COLUMN: CONTROLS & FORM -->
+        <div class="sticky-controls">
+            <div class="desktop-only-show" style="margin-bottom: 3rem;">
+                <h2
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 3.5rem; line-height: 0.85; margin: 0 0 1.5rem 0; text-transform: uppercase;">
+                    MANAGE<br><span style="color: var(--clr-blue);">CUSTOMERS</span></h2>
+                <div
+                    style="background: var(--clr-yellow); color: black; border: 2.5px solid black; padding: 8px 15px; transform: rotate(1deg); display: inline-block; box-shadow: 5px 5px 0px black;">
+                    <p style="font-family: var(--font-odia); font-weight: 950; font-size: 1.1rem; margin: 0;">ଗ୍ରାହକ
+                        ତାଲିକା | Member Management</p>
+                </div>
+            </div>
+
+            <div class="nb-card"
+                style="border-radius: 24px; padding: 2rem; box-shadow: 8px 8px 0px black; border-width: 3px; margin-bottom: 3.5rem; background: white;">
+                <h3
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 1.1rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
+                    <i data-lucide="user-plus" style="color: var(--clr-blue);"></i>
+                    ADD NEW MEMBER
+                </h3>
+                <form method="POST">
+                    <div style="display: grid; gap: 12px;">
+                        <input type="text" name="name" class="nb-input" placeholder="Full Name" required
+                            style="height: 55px; border-radius: 14px; background: var(--clr-bg);">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <input type="text" name="phone" class="nb-input" placeholder="Phone Number" required
+                                style="height: 55px; border-radius: 14px; background: var(--clr-bg);">
+                            <input type="number" step="0.1" name="rate" class="nb-input" placeholder="Milk Rate (₹/L)"
+                                value="50" required
+                                style="height: 55px; border-radius: 14px; background: var(--clr-bg);">
+                        </div>
+                        <input type="email" name="email" class="nb-input" placeholder="Email Address (Optional)"
+                            style="height: 55px; border-radius: 14px; background: var(--clr-bg);">
+                        <button type="submit" class="nb-btn black"
+                            style="margin-top: 10px; height: 64px; border-radius: 16px; font-weight: 950; font-size: 1.1rem; box-shadow: 4px 4px 0px var(--clr-blue); margin-bottom: 1.5rem;">
+                            REGISTER CUSTOMER
+                        </button>
+                    </div>
+                </form>
+                <a href="{{ url_for('admin_dashboard') }}" class="nb-btn outline desktop-only-show"
+                    style="height: 55px; border-radius: 16px; border-width: 3px; font-weight: 950; display: flex; align-items: center; justify-content: center; gap: 8px; border-color: black; margin-bottom: 0;">
+                    <i data-lucide="arrow-left"></i> BACK TO DASHBOARD
+                </a>
+            </div>
+
+            <div class="desktop-only-show" style="opacity: 0.3; text-align: center; margin-top: 4rem;">
+                <p style="font-size: 0.8rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase;">
+                    TOTAL MEMBERS • {{ customers|length }}
+                </p>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: LIST -->
+        <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 1.2rem; margin: 0; display: inline-block; background: black; color: white; padding: 5px 15px; border-radius: 4px;">
+                    ACTIVE MEMBERS
+                </h3>
+                <div class="desktop-only-show" style="font-weight: 900; opacity: 0.5; font-size: 0.8rem;">
+                    {{ customers|length }} RECORDS
+                </div>
+            </div>
+
+            <div class="member-grid">
+                {% for customer in customers %}
+                <div class="nb-card"
+                    style="margin-bottom: 0; padding: 0.8rem; border-radius: 20px; box-shadow: 5px 5px 0px black;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+
+                        <div style="display: flex; align-items: center; gap: 10px; flex: 1; min-width: 160px;">
+                            <!-- Avatar -->
+                            <div
+                                style="flex-shrink: 0; width: 44px; height: 44px; background: var(--clr-bg); border: 2.2px solid black; border-radius: 12px; display: flex; align-items: center; justify-content: center; transform: rotate(-3deg);">
+                                <i data-lucide="user" style="width: 20px; opacity: 0.7;"></i>
+                            </div>
+
+                            <!-- Info -->
+                            <div style="min-width: 0;">
+                                <p
+                                    style="font-weight: 950; font-size: 1.05rem; line-height: 1.1; margin: 0 0 2px 0; word-break: break-word;">
+                                    {{ customer.name }}</p>
+                                <small
+                                    style="opacity: 0.7; font-weight: 800; font-size: 0.7rem; display: block; white-space: nowrap;">+91
+                                    {{ customer.phone }}</small>
+                            </div>
+                        </div>
+
+                        <!-- Actions Group -->
+                        <div
+                            style="display: flex; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0; padding-left: 10px;">
+                            <div class="badge blue"
+                                style="box-shadow: 2px 2px 0px black; font-size: 0.6rem; font-weight: 950; padding: 3px 6px; white-space: nowrap;">
+                                ₹{{ customer.rate_per_liter }}<small style="font-size: 0.6em;">/L</small>
+                            </div>
+                            <div style="display: flex; gap: 4px;">
+                                <a href="{{ url_for('admin_view_history', customer_id=customer.id) }}"
+                                    class="nb-btn outline"
+                                    style="width: 36px; height: 36px; padding: 0; margin-bottom: 0; border-radius: 10px; display: flex; align-items: center; justify-content: center; border-color: black;">
+                                    <i data-lucide="clipboard-list" style="width: 16px;"></i>
+                                </a>
+                                <button onclick="sendWelcome('{{ customer.phone }}', '{{ customer.name }}')"
+                                    class="nb-btn outline"
+                                    style="width: 36px; height: 36px; padding: 0; margin-bottom: 0; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                    <i data-lucide="message-circle" style="width: 16px; color: #25D366;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="nb-card"
+                    style="text-align: center; padding: 3rem 1.5rem; background: var(--clr-bg); border-style: dashed; opacity: 0.5;">
+                    <i data-lucide="users" style="width: 48px; height: 48px; margin-bottom: 1rem;"></i>
+                    <p style="font-weight: 950;">NO CUSTOMERS REGISTERED</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- FOOTER INFO (MOBILE ONLY) -->
+            <div class="desktop-only-hide" style="margin-top: 4rem; text-align: center;">
+                <a href="{{ url_for('admin_dashboard') }}" class="nb-btn outline"
+                    style="border-radius: 16px; border-width: 3px; max-width: 300px; margin: 0 auto; margin-bottom: 2rem;">
+                    BACK TO DASHBOARD
+                </a>
+                <p
+                    style="font-size: 0.75rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; opacity: 0.4;">
+                    TOTAL MEMBERS • {{ customers|length }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sendWelcome(phone, name) {
+            const topBar = "```╔══════════════════════╗```\n";
+            const brandName = "```║  RAMCHANDRA DAIRY FARM   ║```\n";
+            const bottomBar = "```╚══════════════════════╝```\n";
+
+            const header = topBar + brandName + bottomBar +
+                `*📍 Defence Colony, Bhabinarayanpur*\n\n`;
+
+            const greeting = `Namaste ${name}, welcome to the family! 🙏\n(ନମସ୍କାର ${name}, ଆମ ପରିବାରରେ ଆପଣଙ୍କୁ ସ୍ୱାଗତ!)\n\n`;
+
+            const intro = `🥛 *OUR PROMISE:*\nWe provide Fresh Milk every morning.\n` +
+                `(ଆପଣଙ୍କ ପାଇଁ ପ୍ରତିଦିନ ସକାଳେ ଶୁଦ୍ଧ ଏବଂ ସତେଜ କ୍ଷୀର ପହଞ୍ଚାଇବା ଆମର ପ୍ରତିଶ୍ରୁତି।)\n\n`;
+
+            const portal = `🌐 *GO DIGITAL (ଡିଜିଟାଲ୍ ସୁବିଧା):*\n` +
+                `✅ Check Daily Logs (ଦୈନିକ ହିସାବ)\n` +
+                `✅ Download Bills (ମାସିକ ବିଲ୍)\n` +
+                `✅ Payment History (ଦେୟ ବିବରଣୀ)\n\n`;
+
+            const links = `👉 *LOGIN HERE:*\n${window.location.origin}/login\n\n` +
+                `📸 *FARM TOUR:*\n${window.location.origin}/farm\n\n`;
+
+            const footer = "```--------------------------```\n" +
+                `*Pure. Fresh. Digital.*\nThank you! (ଧନ୍ୟବାଦ!)`;
+
+            const msg = header + greeting + intro + portal + links + footer;
+            const url = `https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+        }
+    </script>
+    {% endblock %}

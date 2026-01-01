@@ -1,0 +1,169 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    .logs-grid {
+        display: grid;
+        gap: 20px;
+    }
+
+    /* Desktop layout refinements */
+    @media (min-width: 1024px) {
+        .container {
+            display: block !important;
+            padding-top: 2rem !important;
+        }
+
+        .desktop-split {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 60px;
+            align-items: start;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .sticky-controls {
+            position: sticky;
+            top: 2rem;
+        }
+
+        .logs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px !important;
+        }
+
+        .desktop-header-minimal {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid black;
+        }
+    }
+</style>
+<div style="padding-bottom: 2rem;">
+    <!-- MOBILE HEADER (DEFAULT) -->
+    <header class="desktop-only-hide"
+        style="padding-top: 1rem; padding-bottom: 2rem; border-bottom: 3px solid black; margin-bottom: 2.5rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+            <a href="{{ url_for('customer_dashboard') }}"
+                style="text-decoration: none; color: black; background: white; border: 2.5px solid black; padding: 8px; border-radius: 10px; display: flex; align-items: center; box-shadow: 3px 3px 0px black;">
+                <i data-lucide="chevron-left"></i>
+            </a>
+            <h1
+                style="font-family: 'Lexend'; font-weight: 900; font-size: 1.2rem; margin: 0; text-transform: uppercase;">
+                MILK HISTORY</h1>
+            <div style="width: 40px;"></div>
+        </div>
+
+        <h2 style="font-family: 'Lexend'; font-weight: 950; font-size: 2rem; line-height: 0.9; margin-bottom: 0.5rem;">
+            SUPPLY<br>LOGS</h2>
+        <div
+            style="background: var(--clr-yellow); color: black; border: 2.5px solid black; padding: 6px 12px; transform: rotate(-1deg); display: inline-block; box-shadow: 4px 4px 0px black;">
+            <p style="font-family: var(--font-odia); font-weight: 950; font-size: 1rem; margin: 0;">ଦୈନିକ କ୍ଷୀରର ତାଲିକା
+                | Monthly Breakdown</p>
+        </div>
+    </header>
+
+
+
+    <div class="desktop-split">
+        <!-- LEFT COLUMN: CONTROLS & INFO -->
+        <div class="sticky-controls">
+            <div class="desktop-only-show" style="margin-bottom: 3rem;">
+                <h2
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 3.5rem; line-height: 0.85; margin: 0 0 1.5rem 0; text-transform: uppercase;">
+                    SUPPLY<br><span style="color: var(--clr-blue);">LOGS</span></h2>
+                <div
+                    style="background: var(--clr-yellow); color: black; border: 2.5px solid black; padding: 8px 20px; transform: rotate(-1deg); display: inline-block; box-shadow: 5px 5px 0px black;">
+                    <p style="font-family: var(--font-odia); font-weight: 950; font-size: 1.1rem; margin: 0;">ଦୈନିକ
+                        କ୍ଷୀରର ତାଲିକା | Monthly Breakdown</p>
+                </div>
+            </div>
+
+            <div class="nb-card blue"
+                style="padding: 1.5rem; border-radius: 20px; box-shadow: 6px 6px 0px black; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1rem;">
+                    <i data-lucide="info" style="color: white; width: 24px;"></i>
+                    <h4 style="margin: 0; color: white;">MEMBER INFO</h4>
+                </div>
+                <p style="color: white; font-size: 0.9rem; opacity: 0.9; margin-bottom: 0;">This list shows your daily
+                    milk supply recorded by the dairy. Check these logs to verify your monthly bill.</p>
+            </div>
+
+            <a href="{{ url_for('customer_dashboard') }}" class="nb-btn outline desktop-only-show"
+                style="height: 55px; border-radius: 16px; border-width: 3px; font-weight: 950; display: flex; align-items: center; justify-content: center; gap: 8px; border-color: black; margin-bottom: 0;">
+                <i data-lucide="arrow-left"></i> BACK TO DASHBOARD
+            </a>
+        </div>
+
+        <!-- RIGHT COLUMN: RECORDS -->
+        <div>
+            <h3
+                style="font-family: 'Lexend'; font-weight: 950; font-size: 1.2rem; margin-bottom: 1.5rem; display: inline-block; background: black; color: white; padding: 5px 15px; border-radius: 4px; transform: rotate(1deg);">
+                RECENT SUPPLIES
+            </h3>
+
+            <div class="logs-grid">
+                {% for record in records %}
+                <div class="nb-card {% if record.date == datetime.now().date() %}yellow{% endif %}"
+                    style="margin-bottom: 0; padding: 1.2rem; border-radius: 20px; box-shadow: 6px 6px 0px black;">
+                    <div class="flex-between" style="align-items: flex-start;">
+                        <div>
+                            <span
+                                style="display: inline-block; background: var(--clr-blue); color: white; border: 2px solid black; padding: 2px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; margin-bottom: 8px;">
+                                {{ record.date.strftime('%A').upper() }}
+                            </span>
+                            <p style="font-weight: 950; font-size: 1.3rem; line-height: 1; margin: 0;">{{
+                                record.date.strftime('%d %b, %y') }}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <span
+                                style="font-size: 0.75rem; font-weight: 800; opacity: 0.6; display: block;">TOTAL</span>
+                            <p style="font-weight: 950; font-size: 1.8rem; line-height: 1; margin: 0;">{{
+                                record.total_liters
+                                }}<small style="font-size: 0.5em;">L</small></p>
+                        </div>
+                    </div>
+
+                    <div
+                        style="margin-top: 1.2rem; display: flex; gap: 10px; border-top: 2px dashed rgba(0,0,0,0.1); padding-top: 1rem;">
+                        <div
+                            style="flex: 1; background: var(--clr-bg); border: 2px solid black; border-radius: 12px; padding: 8px; text-align: center;">
+                            <small style="display: block; font-size: 0.6rem; opacity: 0.6;">MORNING</small>
+                            <strong style="font-size: 1rem;">{{ record.morning_liters }}L</strong>
+                        </div>
+                        <div
+                            style="flex: 1; background: var(--clr-bg); border: 2px solid black; border-radius: 12px; padding: 8px; text-align: center;">
+                            <small style="display: block; font-size: 0.6rem; opacity: 0.6;">EVENING</small>
+                            <strong style="font-size: 1rem;">{{ record.evening_liters }}L</strong>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="nb-card blue" style="text-align: center; padding: 3rem 1.5rem;">
+                    <i data-lucide="clipboard-list"
+                        style="width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.5;"></i>
+                    <p style="font-weight: 800; font-size: 1.1rem;">No records found yet.</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">Your supplies will appear here once the owner logs them.
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- FOOTER INFO -->
+            <div style="margin-top: 4rem; text-align: center;">
+                <a href="{{ url_for('customer_dashboard') }}" class="nb-btn outline desktop-only-hide"
+                    style="border-radius: 16px; border-width: 3px; max-width: 300px; margin: 0 auto; margin-bottom: 1.5rem;">
+                    BACK TO DASHBOARD
+                </a>
+                <p style="font-size: 0.8rem; font-weight: 900; letter-spacing: 2px; opacity: 0.4;">END OF LOGS • {{
+                    records|length }} ENTRIES</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

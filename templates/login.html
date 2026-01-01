@@ -1,0 +1,154 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="desktop-split">
+    <!-- Branding & Welcome (Left on Desktop) -->
+    <div>
+        <!-- Top Meta -->
+        <div class="flex-between"
+            style="margin-bottom: 2rem; border-bottom: 2.5px solid var(--clr-black); padding-bottom: 5px;">
+            <small style="font-weight: 900; font-size: 0.8rem;">EST. 2020</small>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <div style="width: 10px; height: 10px; background: var(--clr-black); border-radius: 50%;"></div>
+                <!-- Website Icon -->
+                <img src="{{ url_for('static', filename='images/icon-192.png') }}" alt="Icon"
+                    style="width: 24px; height: 24px; border: 1.5px solid black; border-radius: 6px; object-fit: cover;">
+                <div style="width: 10px; height: 10px; border: 2px solid var(--clr-black); border-radius: 50%;"></div>
+            </div>
+            <small style="font-weight: 900; font-size: 0.8rem;">RAMCHANDRA</small>
+        </div>
+
+        <!-- Brand Header (Unified Icon & Farm Name) -->
+        <div
+            style="display: flex; align-items: center; gap: 15px; margin-bottom: 2rem; background: rgba(255,255,255,0.4); padding: 12px; border: 2px solid black; border-radius: 16px; box-shadow: 4px 4px 0px black;">
+            <img src="{{ url_for('static', filename='images/icon-192.png') }}" alt="App Icon"
+                style="width: 60px; height: 60px; border: 2px solid black; border-radius: 12px; background: white; flex-shrink: 0;">
+            <div>
+                <h2
+                    style="font-family: 'Lexend', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--clr-black); margin: 0; line-height: 1; letter-spacing: -0.5px;">
+                    RAMCHANDRA'S</h2>
+                <h2
+                    style="font-family: 'Lexend', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--clr-black); margin: 0; line-height: 1.2; letter-spacing: -0.5px;">
+                    DAIRY FARM</h2>
+                <div style="display: flex; align-items: center; gap: 4px; margin-top: 4px;">
+                    <i data-lucide="map-pin" style="width: 12px; height: 12px;"></i>
+                    <small style="font-weight: 800; font-size: 0.65rem; text-transform: uppercase;">Defence Colony,
+                        Bhabinarayanpur</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Title Section -->
+        <div style="margin-bottom: 2rem;">
+            <h1
+                style="font-family: 'Noto Sans Odia', sans-serif; font-weight: 900; font-size: 2.2rem; line-height: 1.2; margin-bottom: 0; color: var(--clr-black); white-space: nowrap;">
+                ଶୁଭ <span style="color: var(--clr-blue);">ସ୍ଵାଗତମ୍</span>
+            </h1>
+            <div style="height: 6px; background: var(--clr-black); width: 80px; margin-top: 10px; border-radius: 3px;">
+            </div>
+        </div>
+
+        <!-- Farm Tour Link -->
+        <div style="margin-bottom: 2rem;">
+            <a href="{{ url_for('farm') }}" class="nb-btn"
+                style="background: var(--clr-black); color: white; border-width: 3px; height: 48px; border-radius: 12px; font-weight: 800; font-size: 0.85rem; box-shadow: 4px 4px 0px var(--clr-blue); display: inline-flex; align-items: center; gap: 8px; padding: 0 15px; text-decoration: none;">
+                <i data-lucide="camera" style="width: 18px; height: 18px;"></i>
+                SEE OUR FARM • ଫାର୍ମ ଦେଖନ୍ତୁ
+            </a>
+        </div>
+
+        <!-- Informative Content with Mascot -->
+        <div style="margin-bottom: 2.5rem;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <!-- Generated Mascot Character -->
+                <img src="{{ url_for('static', filename='images/mascot.png') }}" alt="Milkman Character"
+                    style="width: 100px; height: auto; border: 3px solid black; border-radius: 16px; background: white; transform: rotate(-3deg); box-shadow: 5px 5px 0px black; flex-shrink: 0;">
+
+                <p style="font-size: 1rem; line-height: 1.4; font-weight: 600; color: #444; flex: 1;">
+                    Sign in to access your digital dashboard. Track your daily milk supply and view detailed monthly
+                    bills.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Section (Right on Desktop) -->
+    <div>
+        <form method="POST">
+            <div class="form-group">
+                <input type="text" name="identifier" class="nb-input" placeholder="Registered Phone/Email" required
+                    style="border-radius: 16px; background: #fffcf5; border-width: 2.5px;">
+            </div>
+            <div class="form-group" style="position: relative;">
+                <input type="password" name="password" id="loginPassword" class="nb-input" placeholder="Password"
+                    required
+                    style="border-radius: 16px; background: #fffcf5; border-width: 2.5px; padding-right: 50px;">
+                <button type="button" onclick="togglePassword('loginPassword', 'loginToggleIcon')"
+                    style="position: absolute; right: 15px; top: 18px; background: none; border: none; cursor: pointer; color: var(--clr-black);">
+                    <i data-lucide="eye" id="loginToggleIcon" style="width: 22px; height: 22px;"></i>
+                </button>
+            </div>
+
+            <button type="submit" class="nb-btn black"
+                style="height: 64px; font-size: 1.1rem; border-width: 2.5px; border-radius: 16px; margin-bottom: 12px;">
+                Access Dashboard
+            </button>
+        </form>
+
+        <a href="{{ url_for('signup') }}" class="nb-btn outline"
+            style="display: flex; height: 60px; font-size: 1.1rem; justify-content: center; text-decoration: none; border-width: 2.5px; background: transparent; border-radius: 16px;">
+            Create Account
+        </a>
+
+        <div
+            style="text-align: center; margin-top: 20px; border-top: 2.5px dashed var(--clr-black); padding-top: 20px;">
+            <a href="{{ url_for('guest') }}"
+                style="color: var(--clr-black); font-weight: 800; text-decoration: underline; text-transform: uppercase; font-size: 0.8rem; display: block; margin-top: 1rem; margin-bottom: 2rem;">
+                Having trouble? (Guest Info)
+            </a>
+
+            <!-- Owner Contact Card -->
+            <div class="nb-card"
+                style="background: white; border-color: var(--clr-black); padding: 1.2rem; text-align: left; transform: rotate(-1deg); margin-top: 1rem;">
+                <h4
+                    style="font-family: 'Lexend', sans-serif; font-weight: 900; font-size: 0.9rem; margin-bottom: 12px; text-transform: uppercase; display: flex; align-items: center; gap: 8px;">
+                    <i data-lucide="help-circle" style="width: 18px; height: 18px;"></i>
+                    Contact Dairy Owner
+                </h4>
+                <p style="font-family: var(--font-odia); font-weight: 800; font-size: 0.85rem; margin-bottom: 1rem;">
+                    ଯଦି ଆପଣ ଲଗଇନ୍ କରିବାରେ ଅସୁବିଧା ଭୋଗୁଛନ୍ତି, ଦୟାକରି ଯୋଗାଯୋଗ କରନ୍ତୁ |
+                </p>
+
+                <div style="display: flex; gap: 10px;">
+                    <a href="tel:+919777121988" class="nb-btn blue"
+                        style="height: 50px; font-size: 0.8rem; margin: 0; flex: 1; border-radius: 12px;">
+                        <i data-lucide="phone"></i> CALL
+                    </a>
+                    <a href="https://wa.me/919777121988" class="nb-btn green"
+                        style="height: 50px; font-size: 0.8rem; margin: 0; flex: 1; border-radius: 12px;">
+                        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg> WHATSAPP
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePassword(inputId, iconId) {
+        const passwordInput = document.getElementById(inputId);
+        const toggleIcon = document.getElementById(iconId);
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.setAttribute('data-lucide', 'eye-off');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.setAttribute('data-lucide', 'eye');
+        }
+        lucide.createIcons();
+    }
+</script>
+{% endblock %}

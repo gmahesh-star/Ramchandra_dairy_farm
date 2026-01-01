@@ -1,0 +1,207 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    /* Desktop layout refinements */
+    @media (min-width: 1024px) {
+        .container {
+            display: block !important;
+            padding-top: 2rem !important;
+        }
+
+        .desktop-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px !important;
+            align-items: start !important;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .desktop-side-padding {
+            padding-top: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+    }
+</style>
+
+<div style="padding-bottom: 2rem;">
+    <!-- Top Header -->
+    <div class="flex-between" style="margin-bottom: 2.5rem; align-items: flex-start;">
+        <div>
+            <div
+                style="background: var(--clr-blue); color: white; border: 2.5px solid black; padding: 4px 12px; border-radius: 8px; display: inline-block; font-family: 'Anton'; font-size: 0.8rem; margin-bottom: 0.5rem; box-shadow: 3px 3px 0px black;">
+                MEMBER PORTAL</div>
+            <h1 style="margin-bottom: 0; font-size: 2.5rem; line-height: 1;">Namaste,<br><span
+                    style="color: var(--clr-blue);">{{ current_user.customer.name }}</span></h1>
+            <p style="font-family: var(--font-odia); font-weight: 800; font-size: 1.1rem; margin-top: 0.5rem;">ସ୍ୱାଗତମ୍
+                | Welcome Back</p>
+        </div>
+        <div
+            style="width: 60px; height: 60px; background: var(--clr-yellow); border: 3px solid black; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 4px 4px 0px black; transform: rotate(5deg);">
+            <i data-lucide="user" style="width: 30px; height: 30px;"></i>
+        </div>
+    </div>
+
+    <div class="desktop-split">
+        <!-- Left Column: Activity & Stats -->
+        <div class="desktop-side-padding">
+            <!-- Section: Today's Activity -->
+            <div style="position: relative; margin-bottom: 2.5rem;">
+                <h3
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 1.2rem; margin-bottom: 1.5rem; display: inline-block; background: black; color: white; padding: 5px 15px; border-radius: 4px; transform: rotate(-1deg);">
+                    TODAY'S ACTIVITY</h3>
+
+                <div
+                    style="background: white; border: 3px solid black; border-radius: 20px; box-shadow: 8px 8px 0px black; overflow: hidden;">
+                    <!-- Morning -->
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border-bottom: 3px solid black;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div
+                                style="background: var(--clr-yellow); padding: 10px; border-radius: 12px; border: 2.5px solid black; box-shadow: 2px 2px 0px black;">
+                                <i data-lucide="sun" style="width: 24px; height: 24px;"></i>
+                            </div>
+                            <div>
+                                <strong style="display: block; font-size: 1.1rem;">ସକାଳ | Morning</strong>
+                                <small style="opacity: 0.6;">Direct from Farm</small>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="font-size: 1.8rem; font-weight: 950; line-height: 1;">{{
+                                today_att.morning_liters if today_att else 0 }}<small
+                                    style="font-size: 0.8rem;">L</small></span>
+                        </div>
+                    </div>
+
+                    <!-- Evening -->
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border-bottom: 3px solid black;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div
+                                style="background: var(--clr-blue); padding: 10px; border-radius: 12px; border: 2.5px solid black; color: white; box-shadow: 2px 2px 0px black;">
+                                <i data-lucide="moon" style="width: 24px; height: 24px; stroke: white;"></i>
+                            </div>
+                            <div>
+                                <strong style="display: block; font-size: 1.1rem;">ସନ୍ଧ୍ୟା | Evening</strong>
+                                <small style="opacity: 0.6;">Fresh Delivery</small>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="font-size: 1.8rem; font-weight: 950; line-height: 1;">{{
+                                today_att.evening_liters if today_att else 0 }}<small
+                                    style="font-size: 0.8rem;">L</small></span>
+                        </div>
+                    </div>
+
+                    <!-- Total Footer -->
+                    <div
+                        style="background: var(--clr-bg); padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                        <small style="font-weight: 900; opacity: 0.7;">TOTAL INTAKE TODAY</small>
+                        <strong style="font-size: 1.2rem; font-weight: 950;">{{ today_att.total_liters if today_att else
+                            0 }} Liters</strong>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Billing & Actions -->
+        <div class="desktop-side-padding">
+            <!-- Section: Billing Summary -->
+            <div style="margin-bottom: 2.5rem;">
+                <h3
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 1.2rem; margin-bottom: 1.5rem; display: inline-block; background: var(--clr-red); color: white; padding: 5px 15px; border-radius: 4px; transform: rotate(1deg);">
+                    MONTHLY BILL</h3>
+
+                <div
+                    style="background: white; border: 3px solid black; border-radius: 24px; box-shadow: 8px 8px 0px var(--clr-yellow); overflow: hidden; padding: 1.5rem;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                        <div>
+                            <span
+                                style="font-weight: 800; text-transform: uppercase; font-size: 0.75rem; color: #888;">Current
+                                Period</span>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+                                <i data-lucide="calendar" style="width: 18px; color: var(--clr-blue);"></i>
+                                <span style="font-weight: 900; font-size: 1.1rem;">{{ datetime.now().strftime('%B %Y')
+                                    }}</span>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span
+                                style="font-weight: 800; text-transform: uppercase; font-size: 0.75rem; color: #888;">Total
+                                Milk</span>
+                            <span
+                                style="display: block; font-weight: 950; font-size: 1.1rem; color: var(--clr-blue);">{{
+                                bill.total_liters if bill else 0 }} Liters</span>
+                        </div>
+                    </div>
+
+                    <div
+                        style="background: var(--clr-bg); border: 2.5px dashed black; border-radius: 16px; padding: 1.2rem; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span
+                                style="display: block; font-size: 0.75rem; font-weight: 900; opacity: 0.6; text-transform: uppercase;">
+                                {{ 'Monthly Total' if bill and bill.status == 'Paid' else 'Balance Due' }}
+                            </span>
+                            <span style="font-size: 2.2rem; font-weight: 950; line-height: 1;">
+                                ₹{{ ((bill.total_amount - (bill.paid_amount or 0))|round(1)) if bill and bill.status !=
+                                'Paid' else (bill.total_amount|round(1) if bill else 0) }}
+                            </span>
+                            {% if bill and bill.status == 'Partial' %}
+                            <div
+                                style="font-size: 0.65rem; font-weight: 900; opacity: 0.5; margin-top: 4px; text-transform: uppercase;">
+                                Total: ₹{{ bill.total_amount|round(1) }} | Paid: ₹{{ bill.paid_amount|round(1) }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {% if bill %}
+                        {% if bill.status == 'Paid' %}
+                        <div
+                            style="background: var(--clr-green); color: white; border: 2.5px solid black; padding: 8px 15px; border-radius: 12px; font-weight: 950; box-shadow: 3px 3px 0px black; transform: rotate(-5deg);">
+                            PAID</div>
+                        {% elif bill.status == 'Pending' %}
+                        <div
+                            style="background: var(--clr-yellow); color: black; border: 2.5px solid black; padding: 8px 15px; border-radius: 12px; font-weight: 950; box-shadow: 3px 3px 0px black; transform: rotate(5deg);">
+                            PENDING</div>
+                        {% elif bill.status == 'Partial' %}
+                        <div
+                            style="background: var(--clr-yellow); color: black; border: 2.5px solid black; padding: 8px 15px; border-radius: 12px; font-weight: 950; box-shadow: 3px 3px 0px black; transform: rotate(3deg);">
+                            PARTIAL</div>
+                        {% else %}
+                        <div
+                            style="background: var(--clr-red); color: white; border: 2.5px solid black; padding: 8px 15px; border-radius: 12px; font-weight: 950; box-shadow: 3px 3px 0px black; transform: rotate(-3deg);">
+                            DUE</div>
+                        {% endif %}
+                        {% else %}
+                        <span class="badge" style="background: #eee;">N/A</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div style="margin-top: 2rem; display: grid; gap: 15px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <a href="/attendance" class="nb-btn black"
+                        style="height: 60px; border-radius: 18px; font-size: 0.85rem;">
+                        <i data-lucide="calendar-days" style="width: 20px;"></i> LOGS
+                    </a>
+                    <a href="/bills" class="nb-btn blue"
+                        style="height: 60px; border-radius: 18px; border-style: dashed; font-size: 0.85rem;">
+                        <i data-lucide="receipt" style="width: 20px;"></i> BILLS
+                    </a>
+                </div>
+                <a href="/history" class="nb-btn yellow"
+                    style="height: 60px; border-radius: 18px; font-weight: 950; color: black; box-shadow: 4px 4px 0px black;">
+                    <i data-lucide="history" style="width: 20px;"></i> FULL YEARLY HISTORY
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="padding-bottom: 2rem;">
+    <!-- HEADER -->
+    <header style="padding-top: 1rem; padding-bottom: 2rem; border-bottom: 3px solid black; margin-bottom: 2.5rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+            <a href="{{ url_for('manage_customers') if is_admin else url_for('customer_dashboard') }}"
+                style="text-decoration: none; color: black; background: white; border: 2.5px solid black; padding: 8px; border-radius: 10px; display: flex; align-items: center; box-shadow: 3px 3px 0px black;">
+                <i data-lucide="chevron-left"></i>
+            </a>
+            <h1
+                style="font-family: 'Lexend'; font-weight: 900; font-size: 1.2rem; margin: 0; text-transform: uppercase;">
+                {{ 'CUSTOMER HISTORY' if is_admin else 'MY LEDGER' }}</h1>
+            <div style="width: 40px;"></div>
+        </div>
+
+        <h2 style="font-family: 'Lexend'; font-weight: 950; font-size: 2rem; line-height: 0.9; margin-bottom: 0.5rem;">
+            ANNUAL<br>RECORDS</h2>
+        <div
+            style="background: var(--clr-blue); color: white; border: 2.5px solid black; padding: 6px 12px; transform: rotate(1deg); display: inline-block; box-shadow: 4px 4px 0px black;">
+            <p style="font-family: var(--font-odia); font-weight: 950; font-size: 1rem; margin: 0;">ବର୍ଷିକ ବିବରଣୀ |
+                Yearly Logs & Payments</p>
+        </div>
+
+        {% if is_admin %}
+        <div style="margin-top: 1.2rem; font-weight: 950; text-transform: uppercase; font-size: 1.1rem;">
+            <i data-lucide="user" style="vertical-align: middle; width:20px;"></i> {{ customer.name }}
+        </div>
+        {% endif %}
+    </header>
+
+    <!-- CONTENT -->
+    <div style="display: grid; gap: 20px;">
+        {% for bill in bills %}
+        <div class="nb-card"
+            style="margin-bottom: 0; padding: 1.5rem; border-radius: 24px; box-shadow: 6px 6px 0px black;">
+            <div class="flex-between" style="align-items: flex-start; margin-bottom: 1.2rem;">
+                <div>
+                    <span
+                        style="display: inline-block; background: black; color: white; padding: 4px 10px; border-radius: 6px; font-weight: 900; font-size: 0.8rem; margin-bottom: 8px;">
+                        {{ bill.month }}
+                    </span>
+                    <div class="badge {{ 'green' if bill.status == 'Paid' else ('yellow' if bill.status == 'Partial' else 'red') }}"
+                        style="box-shadow: 2px 2px 0px black; font-size: 0.7rem;">
+                        {{ bill.status.upper() }}
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 0.75rem; font-weight: 800; opacity: 0.6; display: block;">BALANCE</span>
+                    <p style="font-weight: 950; font-size: 1.6rem; line-height: 1; margin: 0;">₹{{ (bill.total_amount -
+                        (bill.paid_amount or 0))|round(1) }}</p>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.5rem;">
+                <div
+                    style="background: var(--clr-bg); border: 2px solid black; border-radius: 12px; padding: 10px; text-align: center;">
+                    <small style="display: block; font-size: 0.6rem; opacity: 0.6; font-weight: 900;">TOTAL MILK</small>
+                    <strong style="font-size: 1rem;">{{ bill.total_liters }}L</strong>
+                </div>
+                <div
+                    style="background: var(--clr-bg); border: 2px solid black; border-radius: 12px; padding: 10px; text-align: center;">
+                    <small style="display: block; font-size: 0.6rem; opacity: 0.6; font-weight: 900;">PAID
+                        AMOUNT</small>
+                    <strong style="font-size: 1rem; color: var(--clr-green);">₹{{ (bill.paid_amount or 0)|round(1)
+                        }}</strong>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 8px;">
+                <button onclick="downloadBill('{{ bill.id }}', this)" class="nb-btn black"
+                    style="flex: 2; height: 50px; font-size: 0.8rem; margin-bottom: 0; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i data-lucide="file-text"></i> <span class="btn-text">PDF INVOICE</span>
+                </button>
+                <div
+                    style="flex: 1; background: var(--clr-blue); color: white; border: 2px solid black; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 3px 3px 0px black;">
+                    <small style="font-size: 0.5rem; font-weight: 900; opacity: 0.8;">TOTAL BILL</small>
+                    <strong style="font-size: 0.9rem;">₹{{ bill.total_amount|round(1) }}</strong>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="nb-card blue" style="text-align: center; padding: 4rem 1.5rem;">
+            <i data-lucide="history" style="width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.5;"></i>
+            <p style="font-weight: 800; font-size: 1.1rem;">No history found yet.</p>
+            <p style="font-size: 0.9rem; opacity: 0.8;">Monthly records will appear here after bill generation.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if bills %}
+    <div style="margin-top: 3rem; text-align: center; opacity: 0.5;">
+        <p style="font-size: 0.8rem; font-weight: 900; letter-spacing: 2px;">END OF RECORDS</p>
+    </div>
+    {% endif %}
+</div>
+<script>
+    function downloadBill(billId, btn) {
+        const originalContent = btn.innerHTML;
+
+        // Add loading state
+        btn.classList.add('btn-loading');
+        btn.innerHTML = `<i data-lucide="loader-2" class="spin" style="width: 18px;"></i> <span class="btn-text">WAIT...</span>`;
+
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+        // Trigger download
+        const link = document.createElement('a');
+        link.href = `/download_bill/${billId}`;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Reset state after 4 seconds
+        setTimeout(() => {
+            btn.classList.remove('btn-loading');
+            btn.innerHTML = originalContent;
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }, 4000);
+    }
+</script>
+{% endblock %}

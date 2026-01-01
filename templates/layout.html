@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramchandra Dairy Farm</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#FFD700">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800;900&family=Anton&family=Noto+Sans+Odia:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <style>
+        /* Progress Bar for smoother feel */
+        #nprogress {
+            pointer-events: none;
+        }
+
+        #nprogress .bar {
+            background: black;
+            position: fixed;
+            z-index: 1031;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+    </style>
+</head>
+
+<body class="loading">
+    {% set all_flashes = get_flashed_messages(with_categories=true) %}
+
+    <div class="flash-messages">
+        {% for category, message in all_flashes %}
+        {% if category != 'animation' %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Global Farm Loader Overlay -->
+    <div id="farm-loader"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: opacity 0.5s ease-out;">
+
+        <!-- Animation ABOVE the brand -->
+        <div style="margin-bottom: 1rem;">
+            <lottie-player src="{{ url_for('static', filename='Cows.json') }}" background="transparent" speed="1.2"
+                style="width: 200px; height: 200px;" loop autoplay>
+            </lottie-player>
+        </div>
+
+        <!-- Branding Header (Exact design from Login/Signup) -->
+        <div
+            style="display: flex; align-items: center; gap: 15px; background: white; padding: 12px; border: 2px solid black; border-radius: 16px; box-shadow: 4px 4px 0px black; max-width: 90%; text-align: left;">
+            <img src="{{ url_for('static', filename='images/icon-192.png') }}" alt="App Icon"
+                style="width: 60px; height: 60px; border: 2px solid black; border-radius: 12px; background: white; flex-shrink: 0;">
+            <div>
+                <h2
+                    style="font-family: 'Lexend', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--clr-black); margin: 0; line-height: 1; letter-spacing: -0.5px; text-transform: none;">
+                    RAMCHANDRA'S</h2>
+                <h2
+                    style="font-family: 'Lexend', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--clr-black); margin: 0; line-height: 1.2; letter-spacing: -0.5px; text-transform: none;">
+                    DAIRY FARM</h2>
+                <div style="display: flex; align-items: center; gap: 4px; margin-top: 4px;">
+                    <i data-lucide="map-pin" style="width: 12px; height: 12px;"></i>
+                    <small
+                        style="font-weight: 800; font-size: 0.65rem; text-transform: uppercase; letter-spacing: normal;">Defence
+                        Colony, Bhabinarayanpur</small>
+                </div>
+            </div>
+        </div>
+
+        <div
+            style="margin-top: 2rem; padding: 0 2rem; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div id="loader-fact-container" style="transition: all 0.5s ease; opacity: 1; transform: translateY(0);">
+                <p id="loader-fact-odia"
+                    style="font-family: var(--font-odia); font-weight: 900; font-size: 1.1rem; color: var(--clr-blue); margin-bottom: 0.2rem;">
+                    ନମସ୍ତେ | NAMASTE
+                </p>
+                <p id="loader-fact-en"
+                    style="font-family: 'Lexend'; font-weight: 600; font-size: 0.8rem; color: #666; letter-spacing: 1px; text-transform: uppercase;">
+                    Pure • Fresh • Digital
+                </p>
+            </div>
+            <div
+                style="margin-top: 1.5rem; width: 40px; height: 4px; background: var(--clr-yellow); border-radius: 10px; animation: pulse 1.5s infinite;">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const facts = [
+            { odia: "ଆମ ଗାଈଙ୍କୁ ପ୍ରାକୃତିକ ଓ ସତେଜ ଘାସ ଖାଇବାକୁ ଦିଆଯାଏ", en: "100% NATURAL • GRASS-FED COWS" },
+            { odia: "ପ୍ରତିଦିନ ସକାଳୁ ସତେଜ କ୍ଷୀର ଆପଣଙ୍କ ଦ୍ୱାର ମୁହଁରେ", en: "FARM FRESH • DELIVERED DAILY" },
+            { odia: "ଶୁଦ୍ଧତା ଆମର ସଂକଳ୍ପ, ସ୍ୱାସ୍ଥ୍ୟ ଆମର ଲକ୍ଷ୍ୟ", en: "PURE MILK • HEALTHY FAMILY" },
+            { odia: "ଆମ ଫାର୍ମରେ ଗାଈମାନଙ୍କର ବିଶେଷ ଯତ୍ନ ନିଆଯାଏ", en: "HAPPY COWS • BETTER QUALITY" },
+            { odia: "ବୈଜ୍ଞାନିକ ପଦ୍ଧତିରେ କ୍ଷୀରର ମାନ ପରୀକ୍ଷା କରାଯାଏ", en: "TESTED FOR QUALITY • 100% SAFE" },
+            { odia: "ରାମଚନ୍ଦ୍ର ଡାଏରୀ - ସ୍ୱାଦ ଓ ଶୁଦ୍ଧତାର ପ୍ରତୀକ", en: "TRUSTED TASTE • SINCE 2020" }
+        ];
+
+        let currentFact = 0;
+        let factInterval;
+
+        function showLoader(duration = 0, isProcessing = false) {
+            const loader = document.getElementById('farm-loader');
+            const factOdia = document.getElementById('loader-fact-odia');
+            const factEn = document.getElementById('loader-fact-en');
+            const factContainer = document.getElementById('loader-fact-container');
+
+            if (!loader) return;
+
+            if (isProcessing) {
+                factOdia.innerText = "କ୍ଷୀରର ଶୁଦ୍ଧତା ଯାଞ୍ଚ କରାଯାଉଛି...";
+                factEn.innerText = "PROCESSING FRESHNESS...";
+            } else {
+                currentFact = Math.floor(Math.random() * facts.length);
+                factOdia.innerText = facts[currentFact].odia;
+                factEn.innerText = facts[currentFact].en;
+            }
+
+            loader.style.display = 'flex';
+            loader.offsetHeight;
+            loader.style.opacity = '1';
+
+            if (!isProcessing) {
+                const cycleFact = () => {
+                    currentFact = (currentFact + 1) % facts.length;
+                    factContainer.style.opacity = '0';
+                    factContainer.style.transform = 'translateY(10px)';
+                    setTimeout(() => {
+                        factOdia.innerText = facts[currentFact].odia;
+                        factEn.innerText = facts[currentFact].en;
+                        factContainer.style.opacity = '1';
+                        factContainer.style.transform = 'translateY(0)';
+                    }, 500);
+                };
+                if (factInterval) clearInterval(factInterval);
+                factInterval = setInterval(cycleFact, 2500);
+            }
+
+            if (duration > 0) {
+                setTimeout(hideLoader, duration);
+            }
+        }
+
+        function hideLoader() {
+            const loader = document.getElementById('farm-loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                clearInterval(factInterval);
+                setTimeout(() => { loader.style.display = 'none'; }, 500);
+            }
+        }
+
+        function showTopBar() {
+            const bar = document.createElement('div');
+            bar.id = 'top-loading-bar';
+            bar.style.cssText = 'position:fixed; top:0; left:0; height:4px; background:var(--clr-yellow); z-index:10000; width:0; transition:width 0.3s ease; box-shadow:0 1px 10px rgba(0,0,0,0.2);';
+            document.body.appendChild(bar);
+            setTimeout(() => { bar.style.width = '70%'; }, 50);
+        }
+
+        // Handle page transitions and form submissions
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Check for login animation trigger (Flash Message)
+            let isLoginAnimation = false;
+            {% for category, message in all_flashes %}
+            {% if category == 'animation' %}
+            isLoginAnimation = true;
+            showLoader(4000);
+            {% endif %}
+            {% endfor %}
+
+            // 2. Distinguish between Refresh and Navigation
+            // performance.navigation.type 1 is Reload, 0 is Normal Navigation
+            const isReload = window.performance && window.performance.navigation.type === 1;
+
+            // Only show the full-screen cow splash on REFRESH, not on clicking tabs
+            if (isReload && !isLoginAnimation) {
+                showLoader(800); // Quick 0.8s splash on refresh
+            }
+
+            // 3. Link Clicks (Switching Tabs) - ONLY show the top yellow bar
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+                    const target = link.getAttribute('target');
+                    if (href && !href.startsWith('#') && !href.startsWith('javascript') && !link.hasAttribute('download') && target !== '_blank' && !e.ctrlKey && !e.metaKey) {
+                        showTopBar();
+                        // Full loader is NOT called here for a smoother tab-switching feel
+                    }
+                });
+            });
+
+            // 4. Form Submissions - Keep the full loader for actual data processing
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', () => {
+                    showLoader(0, true);
+                });
+            });
+        });
+
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                hideLoader();
+                const bar = document.getElementById('top-loading-bar');
+                if (bar) bar.remove();
+            }
+        });
+    </script>
+    <style>
+        @keyframes pulse {
+            0% {
+                transform: scaleX(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scaleX(1.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scaleX(1);
+                opacity: 0.5;
+            }
+        }
+    </style>
+
+    {% if current_user.is_authenticated %}
+    <!-- Desktop Top Navigation -->
+    <nav class="desktop-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="{{ url_for('static', filename='images/icon-192.png') }}" alt="Logo">
+                <span>RAMCHANDRA DAIRY</span>
+            </div>
+
+            <div class="nav-links">
+                {% if current_user.role == 'admin' %}
+                <a href="{{ url_for('admin_dashboard') }}"
+                    class="dt-nav-item {{ 'active' if request.endpoint == 'admin_dashboard' }}">Home</a>
+                <a href="{{ url_for('manage_attendance') }}"
+                    class="dt-nav-item {{ 'active' if request.endpoint == 'manage_attendance' }}">Daily Milk</a>
+                <a href="{{ url_for('manage_customers') }}"
+                    class="dt-nav-item {{ 'active' if request.endpoint == 'manage_customers' }}">Customers</a>
+                <a href="{{ url_for('manage_billing') }}"
+                    class="dt-nav-item {{ 'active' if request.endpoint == 'manage_billing' }}">Billing</a>
+                <a href="{{ url_for('farm') }}" class="dt-nav-item {{ 'active' if request.endpoint == 'farm' }}">Farm
+                    View</a>
+                {% else %}
+                <a href="{{ url_for('customer_dashboard') }}"
+                    class="dt-nav-item {{ 'active' if request.endpoint == 'customer_dashboard' }}">Dashboard</a>
+                <a href="{{ url_for('customer_attendance') }}"
+                    class="dt-nav-item {{ 'active' if request.endpoint == 'customer_attendance' }}">Milk Logs</a>
+                <a href="{{ url_for('customer_bills') }}"
+                    class="dt-nav-item {{ 'active' if request.endpoint == 'customer_bills' }}">Your Bills</a>
+                <a href="{{ url_for('profile') }}"
+                    class="dt-nav-item {{ 'active' if request.endpoint == 'profile' }}">Profile</a>
+                <a href="{{ url_for('farm') }}"
+                    class="dt-nav-item {{ 'active' if request.endpoint == 'farm' }}">Farm</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}" class="dt-nav-item logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+    <main class="container">
+        {% block content %}{% endblock %}
+
+        <footer class="desktop-only-show"
+            style="margin-top: auto; padding-top: 5rem; padding-bottom: 6rem; width: 100%; text-align: center;">
+            <div
+                style="width: 100%; max-width: 800px; margin: 0 auto; border-top: 1.5px solid rgba(0,0,0,0.08); padding-top: 3rem;">
+                <!-- Brand Badge -->
+                <div style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; opacity: 0.8;">
+                    <div style="width: 30px; height: 1px; background: black; opacity: 0.2;"></div>
+                    <span
+                        style="font-family: 'Anton'; font-size: 0.8rem; letter-spacing: 5px; text-transform: uppercase;">RAMCHANDRA
+                        DAIRY</span>
+                    <div style="width: 30px; height: 1px; background: black; opacity: 0.2;"></div>
+                </div>
+
+                <!-- Footer Main Message -->
+                <h4
+                    style="font-family: 'Lexend'; font-weight: 900; font-size: 0.75rem; letter-spacing: 2px; color: var(--clr-blue); text-transform: uppercase; margin-bottom: 1rem; opacity: 0.6;">
+                    PURE • FRESH • DIGITAL • 2024
+                </h4>
+
+                <!-- Meta Info -->
+                <div style="display: flex; align-items: center; justify-content: center; gap: 15px; opacity: 0.5;">
+                    <small style="font-weight: 800; font-size: 0.6rem; letter-spacing: 1px;">EST. 2020</small>
+                    <div style="width: 4px; height: 4px; background: black; border-radius: 50%;"></div>
+                    <small style="font-weight: 800; font-size: 0.6rem; letter-spacing: 1px;">BERHAMPUR, ODISHA</small>
+                    <div style="width: 4px; height: 4px; background: black; border-radius: 50%;"></div>
+                    <small style="font-weight: 800; font-size: 0.6rem; letter-spacing: 1px;">V1.0 • PWA ENABLED</small>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    {% if current_user.is_authenticated %}
+    <nav class="bottom-nav mobile-only">
+        {% if current_user.role == 'admin' %}
+        <a href="{{ url_for('admin_dashboard') }}"
+            class="nav-item {{ 'active' if request.endpoint == 'admin_dashboard' }}">
+            <i data-lucide="layout-dashboard"></i>
+            <span>Home</span>
+        </a>
+        <a href="{{ url_for('manage_attendance') }}"
+            class="nav-item {{ 'active' if request.endpoint == 'manage_attendance' }}">
+            <i data-lucide="milk"></i>
+            <span>Daily</span>
+        </a>
+        <a href="{{ url_for('manage_customers') }}"
+            class="nav-item {{ 'active' if request.endpoint == 'manage_customers' }}">
+            <i data-lucide="users"></i>
+            <span>Users</span>
+        </a>
+        <a href="{{ url_for('manage_billing') }}"
+            class="nav-item {{ 'active' if request.endpoint == 'manage_billing' }}">
+            <i data-lucide="receipt"></i>
+            <span>Bills</span>
+        </a>
+        <a href="{{ url_for('farm') }}" class="nav-item {{ 'active' if request.endpoint == 'farm' }}">
+            <i data-lucide="camera"></i>
+            <span>Farm</span>
+        </a>
+        {% else %}
+        <a href="{{ url_for('customer_dashboard') }}"
+            class="nav-item {{ 'active' if request.endpoint == 'customer_dashboard' }}">
+            <i data-lucide="home"></i>
+            <span>Home</span>
+        </a>
+        <a href="{{ url_for('customer_attendance') }}"
+            class="nav-item {{ 'active' if request.endpoint == 'customer_attendance' }}">
+            <i data-lucide="calendar-range"></i>
+            <span>Logs</span>
+        </a>
+        <a href="{{ url_for('customer_bills') }}"
+            class="nav-item {{ 'active' if request.endpoint == 'customer_bills' }}">
+            <i data-lucide="file-text"></i>
+            <span>Bills</span>
+        </a>
+        <a href="{{ url_for('profile') }}" class="nav-item {{ 'active' if request.endpoint == 'profile' }}">
+            <i data-lucide="user"></i>
+            <span>Profile</span>
+        </a>
+        <a href="{{ url_for('farm') }}" class="nav-item {{ 'active' if request.endpoint == 'farm' }}">
+            <i data-lucide="camera"></i>
+            <span>Farm</span>
+        </a>
+        {% endif %}
+    </nav>
+    {% endif %}
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('SW registered!', reg))
+                    .catch(err => console.log('SW failed', err));
+            });
+        }
+
+        // Automatic flash message dismissal
+        setTimeout(() => {
+            const flashes = document.querySelectorAll('.flash');
+            flashes.forEach(f => {
+                f.style.opacity = '0';
+                setTimeout(() => f.style.display = 'none', 500);
+            });
+        }, 4000);
+    </script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>

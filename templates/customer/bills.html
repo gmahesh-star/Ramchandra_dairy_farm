@@ -1,0 +1,226 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    /* Desktop layout refinements */
+    @media (min-width: 1024px) {
+        .container {
+            display: block !important;
+            padding-top: 2rem !important;
+        }
+
+        .desktop-split {
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            gap: 60px;
+            align-items: start;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .sticky-controls {
+            position: sticky;
+            top: 2rem;
+        }
+
+        .desktop-header-minimal {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid black;
+        }
+    }
+</style>
+<div style="padding-bottom: 2rem;">
+    <!-- MOBILE HEADER (DEFAULT) -->
+    <header class="desktop-only-hide"
+        style="padding-top: 1rem; padding-bottom: 2rem; border-bottom: 3px solid black; margin-bottom: 2.5rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+            <a href="{{ url_for('customer_dashboard') }}"
+                style="text-decoration: none; color: black; background: white; border: 2.5px solid black; padding: 8px; border-radius: 10px; display: flex; align-items: center; box-shadow: 3px 3px 0px black;">
+                <i data-lucide="chevron-left"></i>
+            </a>
+            <h1
+                style="font-family: 'Lexend'; font-weight: 900; font-size: 1.2rem; margin: 0; text-transform: uppercase;">
+                INVOICES</h1>
+            <div style="width: 40px;"></div>
+        </div>
+
+        <h2 style="font-family: 'Lexend'; font-weight: 950; font-size: 2rem; line-height: 0.9; margin-bottom: 0.5rem;">
+            BILLING<br>CENTER</h2>
+        <div
+            style="background: var(--clr-blue); color: white; border: 2.5px solid black; padding: 6px 12px; transform: rotate(1deg); display: inline-block; box-shadow: 4px 4px 0px black;">
+            <p style="font-family: var(--font-odia); font-weight: 950; font-size: 1rem; margin: 0;">ବିଲ୍ ଏବଂ ଅର୍ଥ ପ୍ରଦାନ
+                | Payments & Receipts</p>
+        </div>
+    </header>
+
+
+
+    <div class="desktop-split">
+        <!-- LEFT COLUMN: CURRENT BILL -->
+        <div class="sticky-controls">
+            <div class="desktop-only-show" style="margin-bottom: 3rem;">
+                <h2
+                    style="font-family: 'Lexend'; font-weight: 950; font-size: 3.5rem; line-height: 0.85; margin: 0 0 1.5rem 0; text-transform: uppercase;">
+                    BILLING<br><span style="color: var(--clr-blue);">CENTER</span></h2>
+                <div
+                    style="background: black; color: white; border: 2.5px solid black; padding: 8px 20px; transform: rotate(1deg); display: inline-block; box-shadow: 5px 5px 0px var(--clr-blue);">
+                    <p style="font-family: var(--font-odia); font-weight: 950; font-size: 1.1rem; margin: 0;">ବିଲ୍ ଏବଂ
+                        ଅର୍ଥ ପ୍ରଦାନ | Payments & Receipts</p>
+                </div>
+            </div>
+
+            <h3
+                style="font-family: 'Lexend'; font-weight: 950; font-size: 1.1rem; margin-bottom: 1.2rem; display: inline-block; background: black; color: white; padding: 4px 12px; border-radius: 4px;">
+                CURRENT MONTH</h3>
+
+            {% if current_bill %}
+            <div class="nb-card blue"
+                style="padding: 1.5rem; border-radius: 24px; box-shadow: 8px 8px 0px black; border-width: 3px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <div
+                        style="background: white; color: black; border: 2.5px solid black; padding: 5px 12px; border-radius: 10px; font-weight: 900; font-size: 0.9rem; transform: rotate(-2deg);">
+                        {{ current_bill.month }}
+                    </div>
+                    <div class="badge {{ 'green' if current_bill.status == 'Paid' else ('yellow' if current_bill.status == 'Pending' else 'red') }}"
+                        style="box-shadow: 3px 3px 0px black; font-size: 0.8rem; padding: 6px 15px;">
+                        {{ current_bill.status.upper() }}
+                    </div>
+                </div>
+
+                <div style="display: grid; gap: 12px; margin-bottom: 1.5rem;">
+                    <div class="flex-between">
+                        <span style="opacity: 0.8; font-weight: 700;">Milk Intake:</span>
+                        <span style="font-weight: 950; font-size: 1.2rem;">{{ current_bill.total_liters }} L</span>
+                    </div>
+                    <div class="flex-between">
+                        <span style="opacity: 0.8; font-weight: 700;">Rate:</span>
+                        <span style="font-weight: 950; font-size: 1.2rem;">₹{{ current_bill.customer.rate_per_liter
+                            }}/L</span>
+                    </div>
+                    <div style="border-top: 2px dashed rgba(255,255,255,0.3); padding-top: 12px;" class="flex-between">
+                        <span style="font-weight: 800; font-size: 1.1rem;">{{ 'Remaining Due:' if current_bill.status !=
+                            'Paid' else 'Total Paid:' }}</span>
+                        <span style="font-weight: 950; font-size: 2.2rem; line-height: 1;">₹{{
+                            (current_bill.total_amount -
+                            (current_bill.paid_amount or 0))|round(1) if current_bill.status != 'Paid' else
+                            current_bill.total_amount|round(1) }}</span>
+                    </div>
+                    {% if current_bill.status == 'Partial' %}
+                    <div
+                        style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px; opacity: 0.6; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">
+                        <span>Monthly Total: ₹{{ current_bill.total_amount|round(1) }}</span>
+                        <span>Already Paid: ₹{{ current_bill.paid_amount|round(1) }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div style="margin-top: 2rem; border-top: 2.5px solid rgba(255,255,255,0.2); padding-top: 2rem;">
+                    <p
+                        style="font-weight: 800; font-size: 0.9rem; opacity: 0.8; margin-bottom: 1.5rem; text-align: center;">
+                        Please pay your due amount via Cash or UPI to the admin. Once verified, your status will be
+                        updated
+                        here.
+                    </p>
+
+                    <button onclick="downloadBill('{{ current_bill.id }}', this)" class="nb-btn black"
+                        style="border: 2.5px solid white; height: 60px; border-radius: 16px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <i data-lucide="download-cloud"></i> <span class="btn-text">GET PDF INVOICE</span>
+                    </button>
+                </div>
+            </div>
+            {% else %}
+            <div class="nb-card" style="padding: 2rem; text-align: center; border-radius: 20px; opacity: 0.7;">
+                <p style="font-weight: 800;">No bill generated for this month yet.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- RIGHT COLUMN: HISTORY & HELP -->
+        <div>
+            <!-- PREVIOUS BILLS SECTION -->
+            <h3
+                style="font-family: 'Lexend'; font-weight: 950; font-size: 1.1rem; margin-bottom: 1.2rem; display: inline-block; background: var(--clr-yellow); color: black; padding: 4px 12px; border-radius: 4px;">
+                PAST MONTHS</h3>
+            <div class="nb-card"
+                style="padding: 2rem; text-align: center; border-radius: 24px; background: var(--clr-bg); border-style: dashed; margin-bottom: 2rem;">
+                <i data-lucide="history" style="width: 32px; height: 32px; margin-bottom: 10px; opacity: 0.3;"></i>
+                <p style="font-weight: 800; font-size: 0.9rem; opacity: 0.5;">Records of past months will appear here.
+                </p>
+            </div>
+
+            <div
+                style="margin-top: 3rem; background: white; border: 2.5px solid black; border-radius: 20px; padding: 1.5rem; box-shadow: 6px 6px 0px black;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.2rem;">
+                    <i data-lucide="help-circle" style="width: 24px; color: var(--clr-blue);"></i>
+                    <h4 style="margin: 0; font-weight: 950; font-size: 1.1rem; text-transform: uppercase;">
+                        ପଚାରିବାର ଅଛି କି? | ANY QUESTIONS?</h4>
+                </div>
+
+                <p
+                    style="font-family: var(--font-odia); font-size: 1rem; font-weight: 900; line-height: 1.4; color: black; margin-bottom: 0.5rem;">
+                    ବିଲ୍ ବିଷୟରେ କିଛି ପଚାରିବାର ଥିଲେ କଲ୍ କରନ୍ତୁ କିମ୍ବା ଫାର୍ମକୁ ଆସନ୍ତୁ ।
+                </p>
+                <p style="font-size: 0.85rem; font-weight: 700; color: #555; margin-bottom: 1.2rem;">
+                    If you have questions about the bill, please call us or visit the farm.
+                </p>
+
+                <div style="border-top: 2px dashed #eee; padding-top: 1.2rem; margin-bottom: 1.5rem;">
+                    <p
+                        style="font-family: var(--font-odia); font-size: 0.9rem; font-weight: 800; color: black; margin-bottom: 0.4rem;">
+                        ଦେୟ: ଆପଣ କ୍ୟାସ (Cash) କିମ୍ବା UPI ରେ ପେମେଣ୍ଟ କରିପାରିବେ ।
+                    </p>
+                    <p style="font-size: 0.8rem; font-weight: 700; color: #666;">
+                        Payment: You can pay via Cash or UPI.
+                    </p>
+                </div>
+
+                <a href="tel:9777121988" class="nb-btn black"
+                    style="height: 55px; border-radius: 14px; margin-bottom: 0; background: var(--clr-yellow); color: black;">
+                    <i data-lucide="phone-call"></i> କଲ୍ କରନ୍ତୁ | CALL OWNER
+                </a>
+            </div>
+
+            <div class="desktop-only-hide" style="margin-top: 4rem; text-align: center;">
+                <a href="{{ url_for('customer_dashboard') }}" class="nb-btn outline"
+                    style="border-radius: 16px; border-width: 3px; max-width: 300px; margin: 0 auto;">
+                    BACK TO DASHBOARD
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function downloadBill(billId, btn) {
+        const originalContent = btn.innerHTML;
+
+        // Add loading state
+        btn.classList.add('btn-loading');
+        btn.innerHTML = `<i data-lucide="loader-2" class="spin" style="width: 20px;"></i> <span class="btn-text">WAIT...</span>`;
+
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+        // Trigger download
+        const link = document.createElement('a');
+        link.href = `/download_bill/${billId}`;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Reset state after 4 seconds
+        setTimeout(() => {
+            btn.classList.remove('btn-loading');
+            btn.innerHTML = originalContent;
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }, 4000);
+    }
+</script>
+{% endblock %}

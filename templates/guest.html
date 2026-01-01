@@ -1,0 +1,320 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    /* Force edge-to-edge for this specific page */
+    .container {
+        padding: 0 !important;
+        max-width: none !important;
+        margin: 0 !important;
+    }
+
+    header,
+    section,
+    footer {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    /* Desktop vertical alignment fix */
+    @media (min-width: 1024px) {
+        .container {
+            display: block !important;
+            /* Force block to allow scrolling naturally */
+            padding-top: 2rem !important;
+        }
+
+        .desktop-split {
+            align-items: start !important;
+            gap: 40px !important;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .desktop-side-padding {
+            padding-top: 0 !important;
+        }
+    }
+</style>
+
+<div
+    style="background-color: var(--clr-bg); color: var(--clr-black); padding-bottom: 2rem; width: 100%; overflow-x: hidden;">
+    <div class="desktop-split" style="padding: 0 1.5rem;">
+        <!-- Left Side: Identity & Legacy -->
+        <div class="desktop-side-padding">
+            <!-- HEADER / HERO -->
+            <header
+                style="padding-top: 1rem; padding-bottom: 3rem; text-align: left; position: relative; background: var(--clr-bg); padding-left: 0; padding-right: 0;">
+                <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 2rem;">
+                    <img src="{{ url_for('static', filename='images/icon-192.png') }}" alt="Icon"
+                        style="width: 60px; height: 60px; border: 2.5px solid black; border-radius: 12px; background: white; box-shadow: 4px 4px 0px black; flex-shrink: 0;">
+                    <div>
+                        <h1
+                            style="font-family: 'Lexend', sans-serif; font-weight: 900; font-size: 1.5rem; margin: 0; line-height: 1; text-transform: uppercase;">
+                            RAMCHANDRA'S</h1>
+                        <h1
+                            style="font-family: 'Lexend', sans-serif; font-weight: 800; font-size: 1.5rem; margin: 0; line-height: 1.2; text-transform: uppercase;">
+                            DAIRY FARM</h1>
+                        <a href="https://goo.gl/maps/4PxMzxCB7nx6UHvf8?g_st=aw" target="_blank"
+                            style="display: flex; align-items: center; gap: 4px; margin-top: 4px; text-decoration: none; color: inherit;">
+                            <i data-lucide="map-pin" style="width: 12px; height: 12px; color: var(--clr-red);"></i>
+                            <small style="font-weight: 800; font-size: 0.65rem; text-transform: uppercase;">Defence
+                                Colony,
+                                Bhabinarayanpur</small>
+                        </a>
+                    </div>
+                </div>
+
+                <div
+                    style="background: var(--clr-yellow); border: 3px solid black; padding: 10px 15px; transform: rotate(-1deg); display: inline-block; box-shadow: 4px 4px 0px black;">
+                    <p
+                        style="font-family: var(--font-odia); font-weight: 900; font-size: 1.1rem; margin: 0; color: black;">
+                        ଶୁଦ୍ଧ କ୍ଷୀର, ସୁସ୍ଥ ପରିବାର</p>
+                    <p
+                        style="font-family: 'Anton'; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; opacity: 0.7;">
+                        PURE MILK • HEALTHY FAMILY</p>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <a href="{{ url_for('farm') }}" class="nb-btn"
+                        style="background: var(--clr-black); color: white; border-width: 3px; height: 50px; border-radius: 12px; font-weight: 800; font-size: 0.9rem; box-shadow: 4px 4px 0px var(--clr-blue); display: inline-flex; align-items: center; gap: 8px; padding: 0 20px; text-decoration: none;">
+                        <i data-lucide="camera" style="width: 18px; height: 18px;"></i>
+                        SEE OUR FARM • ଫାର୍ମ ଦେଖନ୍ତୁ
+                    </a>
+                </div>
+            </header>
+
+            <!-- SECTION 1: LEGACY -->
+            <section style="margin-bottom: 4rem; position: relative; padding-left: 0; padding-right: 0;">
+                <div
+                    style="background: white; border: 3px solid black; padding: 1.5rem; border-radius: 16px; box-shadow: 6px 6px 0px var(--clr-red);">
+                    <h2
+                        style="font-family: 'Lexend', sans-serif; font-weight: 900; font-size: 2.2rem; margin-bottom: 1.2rem; text-decoration: underline; text-decoration-thickness: 4px;">
+                        OUR LEGACY</h2>
+
+                    <p
+                        style="font-family: var(--font-odia); font-size: 1rem; line-height: 1.5; font-weight: 900; color: #000; margin-bottom: 0.8rem;">
+                        ୨୦୨୦ ରୁ ଆମେ ନିରନ୍ତର ଭାବରେ ଆପଣଙ୍କ ପରିବାର ପାଇଁ ଶୁଦ୍ଧ ଏବଂ ଉତ୍ତମମାନର ଗାଈ ଦୁଗ୍ଧ ଯୋଗାଇ ଆସୁଛୁ | ଆମର
+                        ବିଶ୍ୱାସ —
+                        ପ୍ରତ୍ୟେକ ଶିଶୁ ଏବଂ ପରିବାର ସତେଜ ଦୁଗ୍ଧ ପାଇବାର ଯୋଗ୍ୟ |
+                    </p>
+                    <p
+                        style="font-size: 0.95rem; line-height: 1.4; font-weight: 600; color: #444; border-top: 2px solid rgba(0,0,0,0.1); padding-top: 0.8rem;">
+                        Since 2020, we have provided pure cow milk. We believe every child and family deserves the
+                        freshest milk possible.
+                    </p>
+
+                    <a href="{{ url_for('farm') }}"
+                        style="display: inline-block; margin-top: 1rem; color: var(--clr-red); font-weight: 950; text-transform: uppercase; text-decoration: underline; font-size: 0.85rem;">
+                        Explore Our Complete Dairy Journey →
+                    </a>
+
+                    <!-- Floating Badge -->
+                    <div
+                        style="position: absolute; top: -10px; right: 10px; background: var(--clr-red); color: white; border: 2.5px solid black; padding: 8px 12px; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; transform: rotate(15deg); font-family: 'Anton'; font-size: 1rem; box-shadow: 3px 3px 0px black;">
+                        EST. 2020
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: THE PROCESS -->
+            <section style="margin-bottom: 4rem; padding-left: 0; padding-right: 0;">
+                <h2
+                    style="font-family: 'Lexend', sans-serif; font-weight: 900; font-size: 2.2rem; margin-bottom: 2.5rem; background: var(--clr-blue); color: white; display: inline-block; padding: 4px 15px; border: 3px solid black; box-shadow: 5px 5px 0px black; transform: skew(-5deg);">
+                    THE PROCESS</h2>
+
+                <div style="display: flex; flex-direction: column; gap: 30px; margin-top: 1.5rem;">
+                    <!-- Step 1 -->
+                    <div style="display: flex; gap: 15px; align-items: center;">
+                        <div
+                            style="background: var(--clr-yellow); border: 2.5px solid black; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-family: 'Anton'; font-size: 1.8rem; box-shadow: 3px 3px 0px black; flex-shrink: 0;">
+                            01</div>
+                        <div>
+                            <p style="font-family: var(--font-odia); font-size: 1rem; font-weight: 950; margin: 0;">
+                                ପ୍ରାକୃତିକ
+                                ତଥା ସୁସ୍ଥ ପ୍ରତିପାଳନ</p>
+                            <p
+                                style="font-family: 'Lexend'; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: #666;">
+                                Natural & Healthy Feeding</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div
+                        style="display: flex; gap: 15px; align-items: center; justify-content: flex-end; text-align: right;">
+                        <div>
+                            <p style="font-family: var(--font-odia); font-size: 1rem; font-weight: 950; margin: 0;">
+                                ପରିଷ୍କାର ଏବଂ
+                                ସତେଜ ସଂଗ୍ରହ</p>
+                            <p
+                                style="font-family: 'Lexend'; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: #666;">
+                                Hygienic Collection</p>
+                        </div>
+                        <div
+                            style="background: var(--clr-green); border: 2.5px solid black; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-family: 'Anton'; font-size: 1.8rem; box-shadow: -3px 3px 0px black; flex-shrink: 0; color: white;">
+                            02</div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div style="display: flex; gap: 15px; align-items: center;">
+                        <div
+                            style="background: var(--clr-blue); border: 2.5px solid black; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-family: 'Anton'; font-size: 1.8rem; box-shadow: 3px 3px 0px black; flex-shrink: 0; color: white;">
+                            03</div>
+                        <div>
+                            <p style="font-family: var(--font-odia); font-size: 1rem; font-weight: 950; margin: 0;">
+                                ସିଧାସଳଖ
+                                ଦୁଆରକୁ ବିତରଣ</p>
+                            <p
+                                style="font-family: 'Lexend'; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: #666;">
+                                Direct To Doorstep</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Right Side: Process, Tech & Join -->
+        <div class="desktop-side-padding">
+
+
+            <!-- SECTION 3: SMART TECH (BENTO NEONT-BRUTALISM) -->
+            <section style="margin-bottom: 4rem; padding-left: 0; padding-right: 0;">
+                <h2
+                    style="font-family: 'Lexend', sans-serif; font-weight: 950; font-size: 2.8rem; margin-bottom: 2rem; text-align: left; line-height: 0.9; text-transform: uppercase; transform: rotate(-2deg); background: var(--clr-black); color: white; display: inline-block; padding: 8px 12px; border: 3px solid black; box-shadow: 5px 5px 0px var(--clr-yellow);">
+                    SMART<br>TECH</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 15px;">
+                    <!-- App Card -->
+                    <div
+                        style="grid-column: span 2; background: var(--clr-blue); border: 3px solid black; padding: 1.2rem; border-radius: 20px; box-shadow: 6px 6px 0px black; position: relative; overflow: hidden; transform: rotate(1deg);">
+                        <i data-lucide="smartphone"
+                            style="width: 32px; height: 32px; color: white; margin-bottom: 12px;"></i>
+                        <p
+                            style="font-family: var(--font-odia); font-weight: 950; font-size: 1.1rem; color: white; margin: 0;">
+                            ମୋବାଇଲ୍ ଆପ୍ ବ୍ୟବହାର</p>
+                        <p
+                            style="font-family: 'Lexend'; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: rgba(255,255,255,0.8); margin-top: 4px;">
+                            Complete Mobile App Access</p>
+                    </div>
+
+                    <!-- Logs Card -->
+                    <div
+                        style="background: var(--clr-green); border: 3px solid black; padding: 1.2rem; border-radius: 20px; box-shadow: 6px 6px 0px black; transform: rotate(-2deg);">
+                        <i data-lucide="bar-chart-3"
+                            style="width: 28px; height: 28px; color: white; margin-bottom: 10px;"></i>
+                        <p
+                            style="font-family: var(--font-odia); font-weight: 950; font-size: 0.95rem; color: white; margin: 0;">
+                            ଦୈନିକ ସଂଗ୍ରହ</p>
+                        <p
+                            style="font-family: 'Lexend'; font-weight: 700; font-size: 0.65rem; text-transform: uppercase; color: rgba(255,255,255,0.8); margin-top: 4px;">
+                            Daily Logs</p>
+                    </div>
+
+                    <!-- Bill Card -->
+                    <div
+                        style="background: var(--clr-red); border: 3px solid black; padding: 1.2rem; border-radius: 20px; box-shadow: 6px 6px 0px black; transform: rotate(2deg);">
+                        <i data-lucide="file-text"
+                            style="width: 28px; height: 28px; color: white; margin-bottom: 10px;"></i>
+                        <p
+                            style="font-family: var(--font-odia); font-weight: 950; font-size: 0.95rem; color: white; margin: 0;">
+                            ମାସିକ ବିଲ୍</p>
+                        <p
+                            style="font-family: 'Lexend'; font-weight: 700; font-size: 0.65rem; text-transform: uppercase; color: rgba(255,255,255,0.8); margin-top: 4px;">
+                            PDF Invoices</p>
+                    </div>
+
+                    <!-- Transparency Card -->
+                    <div
+                        style="grid-column: span 2; background: var(--clr-yellow); border: 3px solid black; padding: 1.2rem; border-radius: 20px; box-shadow: 6px 6px 0px black; transform: rotate(-1deg); display: flex; align-items: center; gap: 12px;">
+                        <div style="background: black; padding: 8px; border-radius: 10px;">
+                            <i data-lucide="shield-check"
+                                style="width: 24px; height: 24px; color: var(--clr-yellow);"></i>
+                        </div>
+                        <div>
+                            <p style="font-family: var(--font-odia); font-weight: 950; font-size: 1.1rem; margin: 0;">
+                                ୧୦୦%
+                                ସ୍ୱଚ୍ଛତା</p>
+                            <p
+                                style="font-family: 'Lexend'; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: rgba(0,0,0,0.6);">
+                                100% Transparency</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: JOIN US (CLEAN BRUTALISM) -->
+            <section style="margin-bottom: 4rem; padding-left: 0; padding-right: 0;">
+                <div style="border-top: 4px solid black; padding-top: 2.5rem;">
+                    <h2
+                        style="font-family: 'Lexend', sans-serif; font-weight: 950; font-size: 2.8rem; line-height: 0.85; margin-bottom: 1.5rem; text-transform: uppercase;">
+                        JOIN THE<br>FAMILY</h2>
+
+                    <div style="margin-bottom: 2.5rem;">
+                        <p
+                            style="font-family: var(--font-odia); font-size: 1.3rem; font-weight: 950; line-height: 1.2; margin-bottom: 6px;">
+                            ଆମର ସମସ୍ତ ସୁବିଧା ପାଇବା ପାଇଁ ଆଜି ହିଁ ପଞ୍ଜିକରଣ କରନ୍ତୁ |</p>
+                        <p style="font-family: 'Lexend'; font-weight: 700; font-size: 0.95rem; color: #666;">Experience
+                            the
+                            purest dairy in town.</p>
+
+                        <!-- Registration Notice -->
+                        <div class="nb-card"
+                            style="background: #fff9c4; border-color: var(--clr-black); margin-top: 1.5rem; padding: 1.2rem; transform: rotate(1deg);">
+                            <div style="display: flex; gap: 12px; align-items: flex-start;">
+                                <i data-lucide="help-circle"
+                                    style="width: 24px; height: 24px; color: var(--clr-blue); flex-shrink: 0;"></i>
+                                <div>
+                                    <p
+                                        style="font-family: var(--font-odia); font-weight: 950; font-size: 1rem; line-height: 1.4; margin-bottom: 6px; color: var(--clr-black);">
+                                        ବର୍ତ୍ତମାନ ଗ୍ରାହକମାନେ: ଏଠାରେ ରେଜିଷ୍ଟର କରନ୍ତୁ ଏବଂ ଆପଣଙ୍କ ଦୈନିକ ଦୁଗ୍ଧ ଲଗ୍ସ୍ ଓ
+                                        ବିଲ୍‌ଗୁଡିକୁ
+                                        ଅନଲାଇନ୍‌ରେ ଟ୍ର୍ୟାକ୍ କରନ୍ତୁ।
+                                    </p>
+                                    <p
+                                        style="font-weight: 800; font-size: 0.75rem; text-transform: uppercase; color: #444; margin: 0; line-height: 1.2;">
+                                        Are you an existing customer? Register to see your daily records and bill
+                                        updates.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 2.5rem;">
+                        <a href="{{ url_for('signup') }}" class="nb-btn"
+                            style="background: var(--clr-yellow); color: black; border-width: 3px; height: 64px; border-radius: 16px; font-weight: 950; font-size: 1.1rem; box-shadow: 5px 5px 0px black;">
+                            REGISTER NOW
+                        </a>
+                        <a href="{{ url_for('login') }}" class="nb-btn"
+                            style="background: white; color: black; border-width: 3px; height: 60px; border-radius: 16px; font-weight: 800; font-size: 1.1rem; box-shadow: 4px 4px 0px black;">
+                            MEMBER LOGIN
+                        </a>
+                    </div>
+
+                    <div
+                        style="padding: 15px; background: rgba(0,0,0,0.03); border: 2px dashed black; border-radius: 12px; text-align: center;">
+                        <p
+                            style="font-weight: 800; font-size: 0.75rem; margin-bottom: 4px; text-transform: uppercase; opacity: 0.6;">
+                            Find us at</p>
+                        <p
+                            style="font-family: var(--font-odia); font-weight: 900; font-size: 1rem; margin-bottom: 4px;">
+                            ଡିଫେନ୍ସ
+                            କଲୋନୀ, ଭାବିନାରାୟଣପୁର</p>
+                        <p
+                            style="font-weight: 900; font-size: 1.1rem; color: var(--clr-blue); letter-spacing: -0.5px; margin-bottom: 15px;">
+                            +91
+                            9777121988</p>
+                        <a href="https://goo.gl/maps/4PxMzxCB7nx6UHvf8?g_st=aw" target="_blank"
+                            style="display: flex; align-items: center; justify-content: center; gap: 8px; background: white; color: black; border: 2.5px solid black; padding: 10px; border-radius: 12px; font-weight: 900; font-size: 0.85rem; text-decoration: none; box-shadow: 4px 4px 0px black;">
+                            <i data-lucide="map-pin" style="width: 18px; height: 18px; color: var(--clr-red);"></i>
+                            VIEW ON GOOGLE MAPS
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
