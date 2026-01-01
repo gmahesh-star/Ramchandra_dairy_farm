@@ -60,7 +60,20 @@
     <div class="flash-messages">
         {% for category, message in all_flashes %}
         {% if category != 'animation' %}
-        <div class="flash {{ category }}">{{ message }}</div>
+        <div class="flash {{ category }}" id="flash-{{ loop.index }}">
+            {% if category == 'success' %}
+            <i data-lucide="check-circle" style="color: var(--clr-green);"></i>
+            {% elif category == 'error' %}
+            <i data-lucide="alert-triangle" style="color: var(--clr-red);"></i>
+            {% else %}
+            <i data-lucide="info" style="color: var(--clr-blue);"></i>
+            {% endif %}
+            <span style="flex: 1;">{{ message }}</span>
+            <button onclick="this.parentElement.style.opacity='0'; setTimeout(() => this.parentElement.remove(), 500)"
+                style="background: none; border: none; cursor: pointer; padding: 5px; display: flex; align-items: center; justify-content: center; opacity: 0.5;">
+                <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+            </button>
+        </div>
         {% endif %}
         {% endfor %}
     </div>
@@ -399,12 +412,14 @@
         setTimeout(() => {
             const flashes = document.querySelectorAll('.flash');
             flashes.forEach(f => {
-                f.style.opacity = '0';
-                setTimeout(() => f.style.display = 'none', 500);
+                setTimeout(() => {
+                    f.style.opacity = '0';
+                    f.style.transform = 'translateY(-20px)';
+                    setTimeout(() => f.remove(), 500);
+                }, 4000);
             });
-        }, 4000);
+        });
     </script>
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 
 </html>

@@ -489,44 +489,69 @@ main>* {
     animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
-/* Flash Messages (Premium Toast Style) */
+/* Flash Messages (Premium Neo-Brutalist Style) */
 .flash-messages {
     position: fixed;
     top: 20px;
     left: 20px;
     right: 20px;
-    z-index: 2000;
+    z-index: 3000;
     pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .flash {
-    padding: 1.2rem;
-    border: var(--border-main);
-    border-radius: 20px;
-    margin-bottom: 10px;
+    padding: 1rem 1.2rem;
+    border: 3px solid var(--clr-black);
+    border-radius: 16px;
     font-weight: 800;
+    font-size: 0.9rem;
     box-shadow: 6px 6px 0px var(--clr-black);
     background: white;
     display: flex;
     align-items: center;
-    gap: 12px;
-    transition: all 0.5s ease;
+    gap: 15px;
     pointer-events: auto;
+    animation: alertSlideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    transition: all 0.4s ease;
+}
+
+@keyframes alertSlideIn {
+    from {
+        transform: translateY(-50px) scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.flash i {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
 }
 
 .flash.success {
-    border-left-width: 15px;
-    border-left-color: var(--clr-green);
+    background: #e6ffec;
+    border-color: var(--clr-green);
+    color: var(--clr-green);
 }
 
 .flash.error {
-    border-left-width: 15px;
-    border-left-color: var(--clr-red);
+    background: #fff0f0;
+    border-color: var(--clr-red);
+    color: var(--clr-red);
 }
 
 .flash.info {
-    border-left-width: 15px;
-    border-left-color: var(--clr-blue);
+    background: #f0f7ff;
+    border-color: var(--clr-blue);
+    color: var(--clr-blue);
 }
 
 /* Paneer Module Specifics */
