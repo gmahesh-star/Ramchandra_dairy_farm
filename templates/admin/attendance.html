@@ -248,48 +248,40 @@
                                 </div>
 
                                 <!-- AM Session -->
+                                {% set m_record = records.get(customer.id) %}
+                                {% set m_qty = m_record.morning_liters if m_record else 0 %}
                                 <div class="qty-picker">
                                     <span class="session-label">AM</span>
-                                    <button type="button"
-                                        class="qty-btn absent {{ 'active' if records[customer.id].morning_liters == 0 else '' }}"
+                                    <button type="button" class="qty-btn absent {{ 'active' if m_qty == 0 else '' }}"
                                         onclick="updateQty(this, 0)">ABS</button>
-                                    <button type="button"
-                                        class="qty-btn {{ 'active' if records[customer.id].morning_liters == 0.5 else '' }}"
+                                    <button type="button" class="qty-btn {{ 'active' if m_qty == 0.5 else '' }}"
                                         onclick="updateQty(this, 0.5)">0.5</button>
-                                    <button type="button"
-                                        class="qty-btn {{ 'active' if records[customer.id].morning_liters == 0.75 else '' }}"
+                                    <button type="button" class="qty-btn {{ 'active' if m_qty == 0.75 else '' }}"
                                         onclick="updateQty(this, 0.75)">0.75</button>
-                                    <button type="button"
-                                        class="qty-btn {{ 'active' if records[customer.id].morning_liters == 1.0 else '' }}"
+                                    <button type="button" class="qty-btn {{ 'active' if m_qty == 1.0 else '' }}"
                                         onclick="updateQty(this, 1.0)">1.0</button>
                                     <div class="custom-qty-wrapper">
                                         <input type="number" step="any" name="morning" class="custom-qty-input"
-                                            placeholder="Qty"
-                                            value="{{ records[customer.id].morning_liters if customer.id in records else 0 }}"
-                                            oninput="clearActiveButtons(this)">
+                                            placeholder="Qty" value="{{ m_qty }}" oninput="clearActiveButtons(this)">
                                     </div>
                                 </div>
 
                                 <!-- PM Session -->
+                                {% set e_record = records.get(customer.id) %}
+                                {% set e_qty = e_record.evening_liters if e_record else 0 %}
                                 <div class="qty-picker" style="margin-top: 5px;">
                                     <span class="session-label">PM</span>
-                                    <button type="button"
-                                        class="qty-btn absent {{ 'active' if records[customer.id].evening_liters == 0 else '' }}"
+                                    <button type="button" class="qty-btn absent {{ 'active' if e_qty == 0 else '' }}"
                                         onclick="updateQty(this, 0)">ABS</button>
-                                    <button type="button"
-                                        class="qty-btn {{ 'active' if records[customer.id].evening_liters == 0.5 else '' }}"
+                                    <button type="button" class="qty-btn {{ 'active' if e_qty == 0.5 else '' }}"
                                         onclick="updateQty(this, 0.5)">0.5</button>
-                                    <button type="button"
-                                        class="qty-btn {{ 'active' if records[customer.id].evening_liters == 0.75 else '' }}"
+                                    <button type="button" class="qty-btn {{ 'active' if e_qty == 0.75 else '' }}"
                                         onclick="updateQty(this, 0.75)">0.75</button>
-                                    <button type="button"
-                                        class="qty-btn {{ 'active' if records[customer.id].evening_liters == 1.0 else '' }}"
+                                    <button type="button" class="qty-btn {{ 'active' if e_qty == 1.0 else '' }}"
                                         onclick="updateQty(this, 1.0)">1.0</button>
                                     <div class="custom-qty-wrapper">
                                         <input type="number" step="any" name="evening" class="custom-qty-input"
-                                            placeholder="Qty"
-                                            value="{{ records[customer.id].evening_liters if customer.id in records else 0 }}"
-                                            oninput="clearActiveButtons(this)">
+                                            placeholder="Qty" value="{{ e_qty }}" oninput="clearActiveButtons(this)">
                                     </div>
                                 </div>
                             </div>
