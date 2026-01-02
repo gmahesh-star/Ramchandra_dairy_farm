@@ -164,7 +164,7 @@
                                 style="flex: 1; display: flex; border: 2.5px solid black; border-radius: 14px; overflow: hidden; background: white;">
                                 <span
                                     style="background: #eee; padding: 0 12px; display: flex; align-items: center; font-weight: 900; border-right: 2px solid black;">₹</span>
-                                <input type="number" name="amount" class="nb-input" placeholder="Amount"
+                                <input type="number" step="any" name="amount" class="nb-input" placeholder="Amount"
                                     value="{{ (bills[customer.id].total_amount - (bills[customer.id].paid_amount or 0))|round(1) }}"
                                     style="padding: 0 12px; margin-bottom: 0; border: none; height: 50px; font-weight: 900; flex: 1;">
                             </div>
