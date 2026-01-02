@@ -115,15 +115,35 @@ def logout():
 @app.route('/admin')
 @admin_required
 def admin_dashboard():
+    date_str = request.args.get('date')
+    if date_str:
+        try:
+            target_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        except:
+            target_date = date.today()
+    else:
+        target_date = date.today()
+
     customers_count = Customer.query.count()
-    today_attendance = Attendance.query.filter_by(date=date.today()).all()
-    morning_total = sum(a.morning_liters for a in today_attendance)
-    evening_total = sum(a.evening_liters for a in today_attendance)
     
+    # Get attendance for the target date
+    attendance = Attendance.query.filter_by(date=target_date).all()
+    morning_total = sum(a.morning_liters for a in attendance)
+    evening_total = sum(a.evening_liters for a in attendance)
+    
+    # Calculate daily sales (Revenue)
+    daily_revenue = 0
+    for a in attendance:
+        customer = Customer.query.get(a.customer_id)
+        if customer:
+            daily_revenue += a.total_liters * customer.rate_per_liter
+            
     return render_template('admin/dashboard.html', 
                            customers_count=customers_count,
                            morning_total=morning_total,
-                           evening_total=evening_total)
+                           evening_total=evening_total,
+                           daily_revenue=round(daily_revenue, 2),
+                           selected_date=target_date)
 
 @app.route('/admin/customers', methods=['GET', 'POST'])
 @admin_required
